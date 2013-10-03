@@ -33,21 +33,21 @@ public class Player {
     
         
     
-    private double getWinningPercentage(long wins, long losses, long ties) {
+    public double getWinningPercentage(long wins, long losses, long ties) {
      
-        if (wins < 0  ) {
+        if (wins < 0 ) {
             System.out.println("\n\tThe number of wins must be "
                     + "greater than or equal to zero.");
             return -999;
         }
         
-        if (losses < 0  ) {
+        if (losses < 0 ) {
             System.out.println("\n\tThe number of losses must be "
                     + "greater than or equal to zero.");
             return -999;
         }
         
-        if (ties < 0  ) {
+        if (ties < 0 ) {
             System.out.println("\n\tThe number of ties must be "
                     + "greater than or equal to zero.");
             return -999;
