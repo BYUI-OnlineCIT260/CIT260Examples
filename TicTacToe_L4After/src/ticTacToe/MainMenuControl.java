@@ -4,11 +4,35 @@
  */
 package ticTacToe;
 
+import java.util.Scanner;
+
 /**
  *
  * @author jacksonrkj
  */
 public class MainMenuControl {
+    
+    
+     
+    public void startGame(long noPlayers) {
+                
+        if (noPlayers != 1  &&  noPlayers != 2) {
+            new TicTacToeError().displayError("startGame - invalid number of players specified.");
+            return;
+        }
+        
+        Game game;
+        if (noPlayers == 1) {
+            game = this.create("ONE_PLAYER");
+        }
+        else {
+            game = this.create("TWO_PLAYER");
+        }
+
+        GameMenuView gameMenu = new GameMenuView(game);
+        gameMenu.getInput(game);
+    }
+
     
     
     public Game create(String gameType) {

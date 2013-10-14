@@ -115,7 +115,7 @@ public class GameMenuView {
                     break;
                 case "H":
                     HelpMenuView helpMenu = TicTacToe.getHelpMenu();
-                    helpMenu.getInput(null);
+                    helpMenu.getInput();
                     break;
                 case "Q":
                     gameStatus = Game.QUIT;
