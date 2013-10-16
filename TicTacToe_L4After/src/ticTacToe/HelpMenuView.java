@@ -85,7 +85,7 @@ public class HelpMenuView  {
     // retrieves the command entered by the end user
     protected final String getCommand() {
 
-        Scanner inFile = TicTacToe.getInputFile();
+        Scanner inFile = new Scanner(System.in);
         String command;
         boolean valid = false;
         do {
@@ -93,7 +93,7 @@ public class HelpMenuView  {
             command = inFile.nextLine();
             command = command.trim().toUpperCase();
             valid = validCommand(command);
-            if (!validCommand(command)) {
+            if (!valid) {
                 new TicTacToeError().displayError("Invalid command. Please enter a valid command.");
                 continue;
             }
@@ -102,7 +102,7 @@ public class HelpMenuView  {
         
         return command;
     }
-    
+     
     
     // determines if the command is valid
     private boolean validCommand(String command) {
