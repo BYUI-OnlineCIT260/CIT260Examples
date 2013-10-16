@@ -20,7 +20,7 @@ public class HelpMenuControl  {
         this.displayHelpBoarder();             
         System.out.println( 
                 "\tThe game board for Tic-Tac-Toe. It consist of a grid of "
-                + "\n\tlocations. Players place there marker on the different locations "
+                + "\n\tlocations. Players place their marker on the different locations "
                 + "\n\ton the board in an effort to win the game. The default board is "
                 + "\n\t3 rows by 3 columns.");
         displayHelpBoarder();
