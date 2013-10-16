@@ -55,7 +55,7 @@ public class HelpMenuControl  {
         System.out.println();
         displayHelpBorder();     
         System.out.println( 
-                "\tA computer based player utomatically takes its turn "
+                "\tA computer based player automatically takes its turn "
                 + "\n\timmediatly after a real player in a single player game."
                 ); 
         displayHelpBorder();
