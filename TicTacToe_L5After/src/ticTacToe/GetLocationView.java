@@ -16,9 +16,9 @@ import java.util.regex.Pattern;
 public class GetLocationView {
     private Game game;
     
-    public Object getLocation(Object object) {
-        this.game = (Game) object;
-        Scanner inFile = TicTacToe.getInputFile(); // get input file 
+    public Point getInput(Game game) {
+
+        Scanner inFile = new Scanner(System.in); // get input file 
 
         // prompt for the row and column numbers
         System.out.println("\n\n\t" + game.getCurrentPlayer().getName() + " it is your turn."
@@ -76,8 +76,15 @@ public class GetLocationView {
                         "Enter a valid number of rows and columns from 3 to 10. Try again.");
                 continue;
             }
-
+            
             location = new Point(row-1, column-1);
+            
+            if (board.locationOccupied(location)) {
+                new TicTacToeError().displayError(
+                    "The current location is taken. Select another location");
+                continue;
+            }
+
             valid = true;
 
         } while (!valid);

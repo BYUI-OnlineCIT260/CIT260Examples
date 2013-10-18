@@ -135,6 +135,7 @@ public class Game {
         // clear the board
         this.board.clearTheBoard();
         this.setStatus(Game.NEW_GAME);
+        this.setPlayingOrder(this.playerA, this.playerB);
     }
 
     public void setPlayingOrder(Player player1, Player player2) {

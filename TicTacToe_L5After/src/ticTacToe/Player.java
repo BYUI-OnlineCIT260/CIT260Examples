@@ -91,23 +91,41 @@ public class Player {
 
 
     
-    
-    
-    private double getWinningPercentage() {
-        double totalScore = this.getWins() + this.getLosses() + this.getTies();
+   
+    public double getWinningPercentage(long wins, long losses, long ties) {
+     
+        if (wins < 0 ) {
+            System.out.println("\n\tThe number of wins must be "
+                    + "greater than or equal to zero.");
+            return -999;
+        }
+        
+        if (losses < 0 ) {
+            System.out.println("\n\tThe number of losses must be "
+                    + "greater than or equal to zero.");
+            return -999;
+        }
+        
+        if (ties < 0 ) {
+            System.out.println("\n\tThe number of ties must be "
+                    + "greater than or equal to zero.");
+            return -999;
+        }
+        
+        double totalScore = wins + losses + ties;
         
         if (totalScore ==  0) {
             return 0;
         }
         
-        double winLossRatio = this.getWins() / totalScore;
-        return winLossRatio*100;
+        double winLossRatio = wins / totalScore;
+        return winLossRatio * 100;
     }
 
     public String getPlayerStastics() {
         String playerStatistics = 
                 this.getName() + " has won "
-                + this.getWinningPercentage() + "% of the games."
+                + this.getWinningPercentage(this.wins, this.losses, this.ties) + "% of the games."
                 + "\n\t" + this.getWins() + " wins, "
                 + this.getLosses() + " losses and "
                 + this.getTies() + " ties.";

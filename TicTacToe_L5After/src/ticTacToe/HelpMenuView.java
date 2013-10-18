@@ -34,6 +34,41 @@ public class HelpMenuView  {
     public HelpMenuView() {
         
     } 
+     
+    public String getInput() {       
+        
+        String gameStatus = Game.PLAYING;
+        do {
+            this.display();
+            
+            // get commaned entered
+            String command = this.getCommand();
+            switch (command) {
+                case "B":
+                    this.displayHelp(HelpMenuView.BOARD);
+                    break;
+                case "C":
+                    this.displayHelp(HelpMenuView.COMPUTER_PLAYER);
+                    break;
+                case "G":
+                    this.displayHelp(HelpMenuView.GAME);
+                    break;                  
+                case "L":
+                    this.displayHelp(HelpMenuView.LOCATION);
+                    break;
+                case "M":
+                    this.displayHelp(HelpMenuView.MARKER);
+                    break;
+                 case "R":
+                    this.displayHelp(HelpMenuView.REAL_PLAYER);
+                    break; 
+                case "Q": 
+                    return Game.QUIT;
+            }
+        } while (!gameStatus.equals(Game.QUIT));  
+        
+         return gameStatus;
+    }
     
     public final void display() {
         System.out.println("\n\t===============================================================");
@@ -75,42 +110,7 @@ public class HelpMenuView  {
         
         return command;
     }
-    
-    public String getInput(Object object) {       
-        
-        String gameStatus = Game.PLAYING;
-        do {
-            this.display();
-            
-            // get commaned entered
-            String command = this.getCommand();
-            switch (command) {
-                case "B":
-                    this.displayHelp(HelpMenuView.BOARD);
-                    break;
-                case "C":
-                    this.displayHelp(HelpMenuView.COMPUTER_PLAYER);
-                    break;
-                case "G":
-                    this.displayHelp(HelpMenuView.GAME);
-                    break;                  
-                case "L":
-                    this.displayHelp(HelpMenuView.LOCATION);
-                    break;
-                case "M":
-                    this.displayHelp(HelpMenuView.MARKER);
-                    break;
-                 case "R":
-                    this.displayHelp(HelpMenuView.REAL_PLAYER);
-                    break; 
-                case "Q": 
-                    return Game.QUIT;
-            }
-        } while (!gameStatus.equals(Game.QUIT));  
-        
-         return gameStatus;
-    }
-    
+   
     private void displayHelp(String helpType) {
 
         String helpText = null;

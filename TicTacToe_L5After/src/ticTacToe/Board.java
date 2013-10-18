@@ -76,13 +76,24 @@ public class Board extends AbstractTableModel {
         for (int i = 0; i < this.boardLocations.length; i++) {
             Player[] rowlocations = this.boardLocations[i];
             for (int j = 0; j < rowlocations.length; j++) {
-                Player location = rowlocations[j];
-                location = null;
+                rowlocations[j] =  null;
             }
         }
     }
     
-
+    public boolean locationOccupied(Point location) {
+        int row = location.x;
+        int column = location.y;
+        
+        if (this.boardLocations[row][column] != null) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    
+    
     public void occupyLocation(Player player, int row, int column)  {
         // subtract 1 from row and column number because the array starts a position 0
 

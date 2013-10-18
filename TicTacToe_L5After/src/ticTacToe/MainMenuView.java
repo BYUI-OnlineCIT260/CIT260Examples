@@ -22,7 +22,7 @@ public class MainMenuView {
         {"X", "Exit Tic-Tac-Toe"}
     }; 
   
-    MainMenuControl mainCommands = new MainMenuControl();
+    MainMenuControl mainMenuControl = new MainMenuControl();
     
     public MainMenuView() {
 
@@ -78,14 +78,13 @@ public class MainMenuView {
             String command = this.getCommand();
             switch (command) {
                 case "1":
-                    this.startGame(1);
+                    mainMenuControl.startGame(1);
                     break;
                 case "2":
-                    this.startGame(2);
+                    mainMenuControl.startGame(2);
                     break;
                 case "H":
-                    HelpMenuView helpMenu = TicTacToe.getHelpMenu();
-                    helpMenu.getInput(null);
+                    mainMenuControl.displayHelpMenu();
                     break;
                 case "X":
                     return Game.EXIT;
@@ -95,34 +94,5 @@ public class MainMenuView {
         return Game.EXIT;
     }
 
-    private void startGame(long noPlayers) {
-                
-        if (noPlayers != 1  &&  noPlayers != 2) {
-            new TicTacToeError().displayError("startGame - invalid number of players specified.");
-            return;
-        }
-        
-        Game game;
-        if (noPlayers == 1) {
-            game = this.mainCommands.create("ONE_PLAYER");
-        }
-        else {
-            game = this.mainCommands.create("TWO_PLAYER");
-        }
-
-        GameMenuView gameMenu = new GameMenuView(game);
-        gameMenu.getInput(game);
-    }
-
-    private String quitGame() {
-        System.out.println("\n\tAre you sure you want to quit? (Y or N)");
-        Scanner inFile = new Scanner(System.in);
-        String answer = inFile.next().trim().toUpperCase();
-        if (answer.equals("Y")) {
-            return Game.EXIT;
-        }
-
-        return Game.PLAYING;
-    }
     
 }

@@ -12,8 +12,8 @@ public class BoardView {
     
     Board board;
     
-    public Object displayBoard(Object object) {
-        this.board = (Board) object;
+    public void displayBoard(Board board) {
+        this.board = board;
         this.printHeadRow();
         this.printDividerRow();
         for (int i = 0; i < this.board.getRowCount(); i++) {
@@ -23,7 +23,7 @@ public class BoardView {
         }
         System.out.println();
          
-        return null;
+        return;
     }
 
     private void printHeadRow() {
