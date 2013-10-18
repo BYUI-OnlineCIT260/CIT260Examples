@@ -36,12 +36,13 @@ public class HelpMenuView  {
     // display the help menu and get the end users input selection
     public String getInput() {       
         
-        String gameStatus = Game.PLAYING;
+
+        String command;
         do {
             this.display();
             
             // get commaned entered
-            String command = this.getCommand();
+            command = this.getCommand();
             switch (command) {
                 case "B":
                     this.helpMenuControl.displayBoardHelp();
@@ -64,9 +65,9 @@ public class HelpMenuView  {
                 case "Q": 
                     return "QUIT";
             }
-        } while (!gameStatus.equals("QUIT"));  
+        } while (!command.equals("Q"));  
         
-         return gameStatus;
+         return "PLAYING";
     }
 
         // displays the help menu
@@ -106,13 +107,13 @@ public class HelpMenuView  {
     
     // determines if the command is valid
     private boolean validCommand(String command) {
-        String[][] items = HelpMenuView.menuItems;
 
-        for (String[] item : HelpMenuView.menuItems) {
-            if (item[0].equals(command)) {
+        for (String[] row : HelpMenuView.menuItems) {
+            if (row[0].equals(command)) {
                 return true;
             }
         }
+        
         return false;
     }
   

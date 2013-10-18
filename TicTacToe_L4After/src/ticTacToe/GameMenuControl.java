@@ -4,8 +4,6 @@
  */
 package ticTacToe;
 
-import java.awt.Point;
-
 /**
  *
  * @author jacksonrkj
