@@ -22,7 +22,7 @@ public class GetMarkerView {
         
     } 
     
-    public String getInput(Game game, Player player) {
+    public String getInput(Player player) {
         this.game = game;
         String newMarker = null;
                 

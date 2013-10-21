@@ -22,7 +22,7 @@ public class GamePreferencesMenuControl {
     public void getMarker(Player player) { 
         
         GetMarkerView getMarkerView = new GetMarkerView(this.game);
-        String marker = getMarkerView.getInput(this.game, player);
+        String marker = getMarkerView.getInput(player);
         
         if (marker == null) { // user changed there mind and quit??
             return;
