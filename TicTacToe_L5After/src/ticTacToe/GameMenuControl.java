@@ -44,11 +44,12 @@ public class GameMenuControl {
             this.alternatePlayers(); // alternate players             
             // other player takes turn 
             
-            this.regularPlayerTurn(this.game.getCurrentPlayer());
-            this.displayBoard();
+            returnValue = this.regularPlayerTurn(this.game.getCurrentPlayer());
+            
             if (returnValue < 0  || this.gameOver(this.game.getCurrentPlayer())) {
                 return;
             }
+            this.displayBoard();
             this.alternatePlayers(); // alternate players
         }
         
@@ -162,7 +163,7 @@ public class GameMenuControl {
         this.game.setStatus(Game.PLAYING);
 
         Point location = getLocationView.getInput(this.game);
-        if (location == null) {// no location was entered
+        if (location == null) { // no location was entered?
             return -1;
         }
             
@@ -232,19 +233,24 @@ public class GameMenuControl {
      * Is the game tied?
      */ 
     private boolean isTie() {
+        
         Player[][] locations = this.board.getBoardLocations();
-
+        
+        // for every row in the table
         for (int row = 0; row < locations.length; row++) {
+            
             Player[] rowLocations = locations[row];
+            
+            // for every column in the row
             for (int col = 0; col < rowLocations.length; col++) {
-                Player location = rowLocations[col];
-                if (locations[row][col] == null) { // square not taken yet
+                Player location = rowLocations[col]; // get contents of cell
+                if (locations[row][col] == null) { // location not taken yet?
                     return false;
                 }
             }
         }
 
-        return true;
+        return true; // all locations are taken
     }
 
     /*
@@ -254,16 +260,23 @@ public class GameMenuControl {
 
         Player[][] locations = this.board.getBoardLocations();
 
+        // for every row in the table
         for (int row = 0; row < locations.length; row++) {
+            
+            // get the list of locstaions (columns) in the row
             Player[] rowLocations = locations[row];
+            
+            // for every column in the row
             for (int col = 0; col < rowLocations.length; col++) {
-                if (threeInARow(row, col, locations)) {
-                    return true;
+                
+                // three of the same players markers in a row?
+                if (threeInARow(row, col, locations)) { 
+                    return true; // three in a row found (a winner)
                 }
             }
         }
 
-        return false;
+        return false; // no one is a winner yet
     }
 
     /* 
