@@ -106,8 +106,8 @@ public class GameMenuControl {
       * Display game preferences menu action
       */
     public void displayPreferencesMenu() {
-        GamePreferencesMenuView gamePreferenceMenuView = new GamePreferencesMenuView();
-        gamePreferenceMenuView.getInput(this.game);
+        GamePreferencesMenuView gamePreferenceMenuView = new GamePreferencesMenuView(this.game);
+        gamePreferenceMenuView.getInput();
     }
     
     

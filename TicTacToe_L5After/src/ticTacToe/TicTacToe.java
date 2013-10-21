@@ -18,8 +18,8 @@ import java.util.Scanner;
 public class TicTacToe {
      
     private static final Scanner inFile = new Scanner(System.in);
-    private static final HelpMenuView helpMenu = new HelpMenuView();
-    private static final GamePreferencesMenuView GamePreferencesMenu = new GamePreferencesMenuView();
+    private static HelpMenuView helpMenuView = new HelpMenuView();
+    private static GamePreferencesMenuView GamePreferencesMenu;
     
     
     // Instance variables
@@ -45,8 +45,8 @@ public class TicTacToe {
         return TicTacToe.inFile;
     }
     
-    public static HelpMenuView getHelpMenu() {
-        return TicTacToe.helpMenu;
+    public static HelpMenuView getHelpMenuView() {
+        return TicTacToe.helpMenuView;
     }
 
 
@@ -68,7 +68,7 @@ public class TicTacToe {
         ticTacToe.display();
         MainMenuView mainMenu = new MainMenuView();
 
-        mainMenu.getInput(null);
+        mainMenu.getInput();
         TicTacToe.inFile.close();
     }
     

@@ -14,6 +14,8 @@ import java.util.Scanner;
 
 public class MainMenuView {
     
+    private Game game;
+    
     
     private static final String[][] menuItems = {
         {"1", "One player game"},
@@ -25,7 +27,6 @@ public class MainMenuView {
     MainMenuControl mainMenuControl = new MainMenuControl();
     
     public MainMenuView() {
-
     }
     
     public final void display() {
@@ -68,7 +69,7 @@ public class MainMenuView {
         return command;
     }
     
-    public String getInput(Object object) {       
+    public String getInput() {       
         
         String gameStatus = Game.PLAYING;
         do {

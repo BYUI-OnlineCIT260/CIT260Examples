@@ -4,7 +4,6 @@
  */
 package ticTacToe;
 
-import java.awt.Point;
 import java.util.Scanner;
 
 /**
@@ -28,8 +27,8 @@ public class GameMenuView {
     };
 
     public GameMenuView(Game game) {
-        this.gameMenuControl = new GameMenuControl(game);
-        
+        this.game = game;
+        this.gameMenuControl = new GameMenuControl(game);      
     }
 
     

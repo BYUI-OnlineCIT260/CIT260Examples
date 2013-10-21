@@ -13,9 +13,6 @@ import java.util.Scanner;
 public class MainMenuControl {
     
     
-    
-    
-    
     public void startGame(long noPlayers) {
                 
         if (noPlayers != 1  &&  noPlayers != 2) {
