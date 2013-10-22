@@ -6,6 +6,7 @@ package ticTacToe;
 
 import java.awt.Dimension;
 import java.util.Scanner;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -48,11 +49,11 @@ public class GetDimensionsView {
                 continue;
             }
             
-            // user java regular expression to check for valid integer number?
-            Pattern digitPattern = Pattern.compile(".*\\D.*");
-            if (digitPattern.matcher(valuesEntered[0]).matches()  || 
-                digitPattern.matcher(valuesEntered[1]).matches()
-               ) {
+            // user java regular expression to check for valid integer number 
+            // for both numbers
+            String regExpressionPattern = ".*\\d.*";
+            if (!valuesEntered[0].matches(regExpressionPattern) ||
+                !valuesEntered[1].matches(regExpressionPattern)) {
                 new TicTacToeError().displayError(
                         "You must enter two numbers, the number rows and columns, "
                         + "or a \"Q\" to quit. Try again.");

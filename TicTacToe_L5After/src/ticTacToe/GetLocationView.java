@@ -70,14 +70,14 @@ public class GetLocationView {
                 }
             }
 
-            // use a java regular expression to check that both values entered 
-            // are numbers
-            Pattern digitPattern = Pattern.compile(".*\\D.*");
-            if (digitPattern.matcher(coordinates[0]).matches()  || 
-                digitPattern.matcher(coordinates[1]).matches()
-               ) {
+            
+            // user java regular expression to check for valid integer number 
+            // for both numbers
+            String regExpressionPattern = ".*\\d.*";
+            if (!coordinates[0].matches(regExpressionPattern) ||
+                !coordinates[1].matches(regExpressionPattern)) {
                 new TicTacToeError().displayError(
-                        "You must enter two numbers, a row and the column, "
+                        "You must enter two numbers, the number rows and columns, "
                         + "or a \"Q\" to quit. Try again.");
                 continue;
             }
