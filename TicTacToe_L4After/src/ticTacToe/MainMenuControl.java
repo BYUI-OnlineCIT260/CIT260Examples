@@ -30,7 +30,7 @@ public class MainMenuControl {
         }
 
         GameMenuView gameMenu = new GameMenuView(game);
-        gameMenu.getInput(game);
+        gameMenu.getInput();
     }
 
     
@@ -68,5 +68,10 @@ public class MainMenuControl {
         
         return game;
     } 
+    
+    public void displayHelpMenu() {
+        HelpMenuView helpMenu = new HelpMenuView();
+        helpMenu.getInput();
+    }
     
 }

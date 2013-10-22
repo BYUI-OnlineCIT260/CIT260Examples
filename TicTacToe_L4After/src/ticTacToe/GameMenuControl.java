@@ -12,8 +12,6 @@ public class GameMenuControl {
 
     private Game game;
     private Board board;
-    private GetLocationView getLocation = new GetLocationView();
-    private BoardView displayBoard = new BoardView();
 
     public GameMenuControl(Game game) {
         this.game = game;
@@ -34,14 +32,13 @@ public class GameMenuControl {
    
     public void startNewGame() {
         System.out.println("\n\tstartNewGame() called");
-        this.displayBoard();
     }
     
     
             
     public void displayPreferencesMenu() {
-        GamePreferencesMenuView gamePreferencesMenu = TicTacToe.getGamePreferencesMenu();
-        gamePreferencesMenu.getInput(this.game);
+        GamePreferencesMenuView gamePreferencesMenu = new GamePreferencesMenuView(this.game);
+        gamePreferencesMenu.getInput();
     }
     
     
@@ -55,7 +52,7 @@ public class GameMenuControl {
     }
     
     public void displayHelpMenu() {
-        HelpMenuView helpMenu = TicTacToe.getHelpMenu();
+        HelpMenuView helpMenu = new HelpMenuView();
         helpMenu.getInput();
     }
     

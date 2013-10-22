@@ -29,14 +29,18 @@ public class MainMenuView {
     }
  
     
-    public String getInput(Object object) {       
+    public void getInput() {       
+
+        String command;
+        Scanner inFile = new Scanner(System.in);
         
-        String gameStatus = Game.PLAYING;
         do {
-            this.display();
+            this.display(); // display the menu
 
             // get commaned entered
-            String command = this.getCommand();
+            command = inFile.nextLine();
+            command = command.trim().toUpperCase();
+            
             switch (command) {
                 case "1":
                     this.mainMenuControl.startGame(1);
@@ -45,36 +49,20 @@ public class MainMenuView {
                     this.mainMenuControl.startGame(2);
                     break;
                 case "H":
-                    HelpMenuView helpMenu = TicTacToe.getHelpMenu();
-                    helpMenu.getInput();
+                    this.mainMenuControl.displayHelpMenu();            
                     break;
                 case "X":
-                    return Game.EXIT;
+                    break;
+                default: 
+                    new TicTacToeError().displayError("Invalid command. Please enter a valid command.");
+                    continue;                    
             }
-        } while (!gameStatus.equals("QUIT"));
+        } while (!command.equals("X"));
 
-        return "QUIT";
+        return;
     }
     
-    
-   public final String getCommand() {
 
-        Scanner inFile = TicTacToe.getInputFile();
-        String command;
-        boolean valid = false;
-        do {
-            command = inFile.nextLine();
-            command = command.trim().toUpperCase();
-            valid = validCommand(command);
-            if (!validCommand(command)) {
-                new TicTacToeError().displayError("Invalid command. Please enter a valid command.");
-                continue;
-            }
-                
-        } while (!valid);
-        
-        return command;
-    }
     
     
    public final void display() {
@@ -85,19 +73,6 @@ public class MainMenuView {
             System.out.println("\t   " + menuItems[i][0] + "\t" + menuItems[i][1]);
         }
         System.out.println("\t===============================================================\n");
-    }
-
-    private boolean validCommand(String command) {
-        String[][] items = MainMenuView.menuItems;
-
-        for (String[] item : MainMenuView.menuItems) {
-            if (item[0].equals(command)) {
-                return true;
-            }
-        }
-        return false;
-    }
-    
-   
+    }   
     
 }

@@ -14,7 +14,6 @@ import java.util.Scanner;
  */
 public class HelpMenuView  {
         
-   
     private final static String[][] menuItems = {
         {"B", "The board"},
         {"C", "A computer player"}, 
@@ -34,15 +33,19 @@ public class HelpMenuView  {
     } 
     
     // display the help menu and get the end users input selection
-    public String getInput() {       
-        
-
+    public void getInput() {       
+              
         String command;
+        Scanner inFile = new Scanner(System.in);
+        
         do {
-            this.display();
+            
+            this.display(); // display the menu
             
             // get commaned entered
-            command = this.getCommand();
+            command = inFile.nextLine();
+            command = command.trim().toUpperCase();
+            
             switch (command) {
                 case "B":
                     this.helpMenuControl.displayBoardHelp();
@@ -63,11 +66,14 @@ public class HelpMenuView  {
                     this.helpMenuControl.displayRealPlayerHelp();
                     break; 
                 case "Q": 
-                    return "QUIT";
+                    break;
+                default: 
+                    new TicTacToeError().displayError("Invalid command. Please enter a valid command.");
+                    continue;
             }
         } while (!command.equals("Q"));  
         
-         return "PLAYING";
+         return;
     }
 
         // displays the help menu
@@ -79,42 +85,6 @@ public class HelpMenuView  {
             System.out.println("\t   " + menuItems[i][0] + "\t" + menuItems[i][1]);
         }
         System.out.println("\t===============================================================\n");
-    }
-
-    
-    
-    // retrieves the command entered by the end user
-    protected final String getCommand() {
-
-        Scanner inFile = new Scanner(System.in);
-        String command;
-        boolean valid = false;
-        do {
-
-            command = inFile.nextLine();
-            command = command.trim().toUpperCase();
-            valid = validCommand(command);
-            if (!valid) {
-                new TicTacToeError().displayError("Invalid command. Please enter a valid command.");
-                continue;
-            }
-                
-        } while (!valid);
-        
-        return command;
-    }
-     
-    
-    // determines if the command is valid
-    private boolean validCommand(String command) {
-
-        for (String[] row : HelpMenuView.menuItems) {
-            if (row[0].equals(command)) {
-                return true;
-            }
-        }
-        
-        return false;
     }
   
 }
