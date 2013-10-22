@@ -16,12 +16,16 @@ import java.util.regex.Pattern;
 public class GetLocationView {
     private Game game;
     
+    public GetLocationView(Game game) {
+        this.game = game;
+    }
+    
     /*
      * Prompt the user to enter the location (row and column) to place their 
      * marker on the board
      * @Param game the object representing the game
      */
-    public Point getInput(Game game) {
+    public Point getInput() {
 
         Scanner inFile = new Scanner(System.in); // get input file      
         String[] coordinates;
@@ -33,7 +37,7 @@ public class GetLocationView {
         // prompt the use to enter the locaton to placeread the row and column coordinates
         while (!valid) {
             // prompt for the row and column numbers
-            System.out.println("\n\n\t" + game.getCurrentPlayer().getName() + " it is your turn."
+            System.out.println("\n\n\t" + this.game.getCurrentPlayer().getName() + " it is your turn."
                 + " Enter a row and column number (For example: 1 3)");
             
             // get the value entered by the user 
@@ -83,7 +87,7 @@ public class GetLocationView {
             int row = Integer.parseInt(coordinates[0]);
             int column = Integer.parseInt(coordinates[1]);
                      
-            Board board = game.getBoard(); // get the game board
+            Board board = this.game.getBoard(); // get the game board
             
             // Check for invalid row and column entered
             if (row < 1   ||  row > board.getRowCount() ||

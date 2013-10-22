@@ -16,8 +16,7 @@ import java.util.Scanner;
 
 
 public class GamePreferencesMenuView  {
-    
-    private Game game;
+    Game game;
     private GamePreferencesMenuControl gamePreferenceControl;
 
     private final static String[][] menuItems = {
@@ -29,59 +28,20 @@ public class GamePreferencesMenuView  {
 
     public GamePreferencesMenuView(Game game) {
         this.game = game;
-        this.gamePreferenceControl = new GamePreferencesMenuControl(this.game);
+        gamePreferenceControl = new GamePreferencesMenuControl(game);
     }
+
     
-    public final void display() {
-        System.out.println("\n\t===============================================================");
-        System.out.println("\tEnter the letter associated with one of the following commands:");
-
-        for (int i = 0; i < GamePreferencesMenuView.menuItems.length; i++) {
-            System.out.println("\t   " + menuItems[i][0] + "\t" + menuItems[i][1]);
-        }
-        System.out.println("\t===============================================================\n");
-    }
-
-    private boolean validCommand(String command) {
-        String[][] items = GamePreferencesMenuView.menuItems;
-
-        for (String[] item : GamePreferencesMenuView.menuItems) {
-            if (item[0].equals(command)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private final String getCommand() {
-
-        Scanner inFile = TicTacToe.getInputFile();
+    public void getInput() {       
         String command;
-        boolean valid = false;
-        do {
-            command = inFile.nextLine();
-            command = command.trim().toUpperCase();
-            valid = validCommand(command);
-            if (!validCommand(command)) {
-                new TicTacToeError().displayError("Invalid command. Please enter a valid command.");
-                continue;
-            }
-                
-        } while (!valid);
-        
-        return command;
-    }
-    
-    
-    public String getInput() { 
-       this.game = game;
-       String command = "";
+        Scanner inFile = new Scanner(System.in);
         
         do {
             this.display();
 
             // get commaned entered
-           command = this.getCommand();
+            command = inFile.nextLine();
+            command = command.trim().toUpperCase();
             
             switch (command) {
                 case "1":
@@ -91,15 +51,29 @@ public class GamePreferencesMenuView  {
                     this.gamePreferenceControl.getMarker(this.game.getPlayerB());
                     break;
                 case "D":
-                    gamePreferenceControl.getDimensions();
+                    this.gamePreferenceControl.getDimensions();
                     break;
                 case "Q":
-                    return "QUIT";
+                    break;
+                default: 
+                    new TicTacToeError().displayError("Invalid command. Please enter a valid command.");
+                    continue;
             }
         } while (!command.equals("Q"));
 
-        return "PLAYING";
+        return;
     }
     
     
+        
+    public final void display() {
+        System.out.println("\n\t===============================================================");
+        System.out.println("\tEnter the letter associated with one of the following commands:");
+
+        for (int i = 0; i < GamePreferencesMenuView.menuItems.length; i++) {
+            System.out.println("\t   " + menuItems[i][0] + "\t" + menuItems[i][1]);
+        }
+        System.out.println("\t===============================================================\n");
+    }
+ 
 }

@@ -14,7 +14,7 @@ public class Game {
     public static final String ONE_PLAYER = "ONE_PLAYER";
     public static final String TWO_PLAYER = "TWO_PLAYER";
     
-    public static final String CONTINUE = "CONTINUE";
+    public static final String NO_ACTIVE_GAME = "NO_GAME_STARTED";
     public static final String NEW_GAME = "NEW_GAME";
     public static final String PLAYING = "PLAYING"; 
     public static final String WINNER = "WINNER"; 

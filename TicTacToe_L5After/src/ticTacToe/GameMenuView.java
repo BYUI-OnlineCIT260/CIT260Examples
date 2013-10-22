@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class GameMenuView {
     
     private Game game;
-    private GameMenuControl gameMenuControl = null; 
+    private GameMenuControl gameMenuControl ; 
 
 
     private final static String[][] menuItems = {
@@ -28,49 +28,52 @@ public class GameMenuView {
 
     public GameMenuView(Game game) {
         this.game = game;
-        this.gameMenuControl = new GameMenuControl(game);      
+        this.gameMenuControl = new GameMenuControl(game);
+        
     }
 
     
     
-    public Object getInput(Object object) {
-        this.game = (Game) object;
+    public void getInput() {
+   
+        String command;
+        Scanner inFile = new Scanner(System.in);
 
-        this.game.setStatus(Game.CONTINUE);
-        
-        String gameStatus = this.game.getStatus();
-        do {
-     
-            this.display();
-            
+        do {    
+            this.display(); // display the menu
+
             // get commaned entered
-            String command = this.getCommand();
+            command = inFile.nextLine();
+            command = command.trim().toUpperCase();
+            
             switch (command) {
                 case "T":
                     this.gameMenuControl.takeTurn();
                     break;
                 case "D":
-                    this.gameMenuControl.displayBoard();
+                    gameMenuControl.displayBoard();
                     break;
                 case "N":
-                    this.gameMenuControl.startNewGame();
+                    gameMenuControl.startNewGame();
                     break;
                 case "R":
-                    this.gameMenuControl.displayStatistics();
+                    gameMenuControl.displayStatistics();
                     break;
                 case "P":
-                    this.gameMenuControl.displayPreferencesMenu();
+                    gameMenuControl.displayPreferencesMenu();
                     break;
                 case "H":
-                    this.gameMenuControl.displayHelpMenu();
+                    gameMenuControl.displayHelpMenu();
                     break;
-                case "Q":
-                    gameStatus = "QUIT";
+                case "Q":                   
                     break;
+                default: 
+                    new TicTacToeError().displayError("Invalid command. Please enter a valid command.");
+                    continue;                              
             }
-        } while (!gameStatus.equals("QUIT"));
+        } while (!command.equals("Q"));
 
-        return Game.PLAYING;
+        return;
     }
     
 
@@ -84,38 +87,5 @@ public class GameMenuView {
         }
         System.out.println("\t===============================================================\n");
     }
-
-    private boolean validCommand(String command) {
-        String[][] items = GameMenuView.menuItems;
-
-        for (String[] item : GameMenuView.menuItems) {
-            if (item[0].equals(command)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    protected final String getCommand() {
-
-        Scanner inFile = TicTacToe.getInputFile();
-        String command;
-        boolean valid = false;
-        do {
-            command = inFile.nextLine();
-            command = command.trim().toUpperCase();
-            valid = validCommand(command);
-            if (!validCommand(command)) {
-                new TicTacToeError().displayError("Invalid command. Please enter a valid command.");
-                continue;
-            }
-                
-        } while (!valid);
-        
-        return command;
-    }
-
-
-
-   
+  
 }

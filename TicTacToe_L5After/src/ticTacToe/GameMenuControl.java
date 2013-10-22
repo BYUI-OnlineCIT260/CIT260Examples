@@ -16,9 +16,9 @@ import java.util.Random;
  */
 public class GameMenuControl {
     
-   private Game game;
+    private Game game;
     private Board board;
-    private GetLocationView getLocationView = new GetLocationView();
+    private GetLocationView getLocationView;
     private BoardView boardView = new BoardView();
 
     
@@ -34,6 +34,13 @@ public class GameMenuControl {
     public void takeTurn() {
         
         int returnValue = 1;
+        
+        if (!this.game.getStatus().equals(Game.NEW_GAME)  && 
+            !this.game.getStatus().equals(Game.PLAYING)) {
+            new TicTacToeError().displayError("You must start a new game first.");
+            return;
+        }
+        
         if (this.game.getGameType().equals(Game.TWO_PLAYER)) { //two player game 
             // regular player takes turn
             returnValue = this.regularPlayerTurn(this.game.getCurrentPlayer());            
@@ -42,10 +49,9 @@ public class GameMenuControl {
             }
             this.displayBoard();
             this.alternatePlayers(); // alternate players             
+            
             // other player takes turn 
-            
-            returnValue = this.regularPlayerTurn(this.game.getCurrentPlayer());
-            
+            returnValue = this.regularPlayerTurn(this.game.getCurrentPlayer());            
             if (returnValue < 0  || this.gameOver(this.game.getCurrentPlayer())) {
                 return;
             }
@@ -63,8 +69,7 @@ public class GameMenuControl {
             // computer takes turn         
             this.coumputerTakesTurn(this.game.getOtherPlayer());
             System.out.println("\n\tThe computer also took it's turn");
-            this.displayBoard();
-            
+            this.displayBoard();            
             if (returnValue < 0  || this.gameOver(this.game.getOtherPlayer())) {
                 return;
             }
@@ -161,8 +166,9 @@ public class GameMenuControl {
         } 
         
         this.game.setStatus(Game.PLAYING);
-
-        Point location = getLocationView.getInput(this.game);
+        
+        GetLocationView getLocationView = new GetLocationView(this.game);
+        Point location = getLocationView.getInput();
         if (location == null) { // no location was entered?
             return -1;
         }

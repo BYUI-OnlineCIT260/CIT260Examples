@@ -29,7 +29,7 @@ public class MainMenuControl {
         }
 
         GameMenuView gameMenu = new GameMenuView(game);
-        gameMenu.getInput(game);
+        gameMenu.getInput();
     }
 
     
@@ -60,8 +60,16 @@ public class MainMenuControl {
 
         }
 
+        // set default markers for each player
+        playerA.setMarker("X");
+        playerB.setMarker("O");
+        
+        // save the two players created as the default players of the game
         game.setPlayerA(playerA);
-        game.setPlayerB(playerB);
+        game.setPlayerB(playerB); 
+        
+        // set the game status to game not yet in playing mode
+        game.setStatus(Game.NO_ACTIVE_GAME);
         
         return game;
     } 
