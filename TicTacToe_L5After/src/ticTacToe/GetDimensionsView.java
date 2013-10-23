@@ -6,22 +6,24 @@ package ticTacToe;
 
 import java.awt.Dimension;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  *
  * @author jacksonrkj
  */
 public class GetDimensionsView {
+    private Game game;
+    
+    public GetDimensionsView(Game game) {
+        this.game = game;
+    }
     
         
-     public Dimension getInput(Game game) {
-
+     public Dimension getInput() {
+        Scanner inFile = new Scanner(System.in);
+        
         // prompt for the row and column numbers
         System.out.println("\n\tEnter the number of rows and columns in the board (For example: 3 3)");
-
-        Scanner inFile = TicTacToe.getInputFile(); // get input file 
         
         // read the row and column coordinates
         String[] valuesEntered;

@@ -6,7 +6,6 @@ package ticTacToe;
 
 import java.awt.Point;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
     
 /**

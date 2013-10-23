@@ -40,13 +40,13 @@ public class GamePreferencesMenuControl {
         if (this.game.getStatus().equals(Game.PLAYING)) {
             new TicTacToeError().displayError("You can not change the dimensions "
               + "of the board once the game has been started. "
-              + "\nStart a new game and then change the dimensions "
+              + "\n\tStart a new game and then change the dimensions "
               + "of the board. ");
             return;
         }
         
-        GetDimensionsView getDimensionsView = new GetDimensionsView();
-        Dimension dimension = getDimensionsView.getInput(this.game);
+        GetDimensionsView getDimensionsView = new GetDimensionsView(this.game);
+        Dimension dimension = getDimensionsView.getInput();
         
         if (dimension == null) {    
             return;

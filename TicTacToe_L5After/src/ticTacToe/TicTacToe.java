@@ -16,12 +16,7 @@ import java.util.Scanner;
 
 
 public class TicTacToe {
-     
-    private static final Scanner inFile = new Scanner(System.in);
-    private static HelpMenuView helpMenuView = new HelpMenuView();
-    private static GamePreferencesMenuView GamePreferencesMenu;
-    
-    
+  
     // Instance variables
     private static String[] nameList;
     
@@ -40,20 +35,7 @@ public class TicTacToe {
     public TicTacToe() {
         
     }
-        
-    public static Scanner getInputFile() {
-        return TicTacToe.inFile;
-    }
-    
-    public static HelpMenuView getHelpMenuView() {
-        return TicTacToe.helpMenuView;
-    }
-
-
-    public static GamePreferencesMenuView getGamePreferencesMenu() {
-        return GamePreferencesMenu;
-    }
-
+ 
     public static String[] getNameList() {
         return nameList;
     }
@@ -67,9 +49,7 @@ public class TicTacToe {
         TicTacToe ticTacToe = new TicTacToe();
         ticTacToe.display();
         MainMenuView mainMenu = new MainMenuView();
-
         mainMenu.getInput();
-        TicTacToe.inFile.close();
     }
     
     private void display() {

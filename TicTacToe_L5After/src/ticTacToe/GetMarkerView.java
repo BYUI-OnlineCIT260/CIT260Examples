@@ -23,8 +23,9 @@ public class GetMarkerView {
     } 
     
     public String getInput(Player player) {
-        this.game = game;
+
         String newMarker = null;
+        Scanner in = new Scanner(System.in);
                 
         boolean valid = false; // flag to indicate if valid character entered
         while (!valid) {
@@ -33,8 +34,7 @@ public class GetMarkerView {
                     + ", enter a single character that will be used to mark "
                     + "your squares in the game.");
             
-            // get input from user
-            Scanner in = TicTacToe.getInputFile();
+            // get input from user           
             newMarker = in.nextLine();
            
             // no marker entered?
