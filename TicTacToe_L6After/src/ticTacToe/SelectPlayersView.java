@@ -13,16 +13,15 @@ import java.util.Scanner;
 public class SelectPlayersView {
     
     private Game game;
-    private String[] playerNames;
+    private Player[] playerList;
 
     public SelectPlayersView(Game game) {
         this.game = game;
-        playerNames = TicTacToe.getNameList();
+        playerList = TicTacToe.getPlayerList();
     }
 
     
-    public String selectPlayers(String[] nameList) {
-        String playersName;
+    public boolean getInput() {
         
         this.displayNameList(); // display the list of names
         
@@ -31,12 +30,12 @@ public class SelectPlayersView {
            System.out.println("\tPlease enter the number of the player.");
 
             // get the players name
-            playersName = this.getName(TicTacToe.getNameList());
-
-            if (playersName ==  null) {
-                return Game.QUIT;
+            Player player = this.getPlayer();
+            if (player ==  null) {
+                return false;
             }
-            this.game.getPlayerA().setName(playersName);
+           
+            this.game.setPlayerA(player);
             this.game.getPlayerB().setName("Computer");
         }
         
@@ -44,32 +43,36 @@ public class SelectPlayersView {
         else { 
             System.out.println("\tPlease enter the number of the first player.");
             // get first players name
-            playersName = this.getName(TicTacToe.getNameList());
-            if (playersName ==  null) {
-                return Game.QUIT;
+            Player player1 = this.getPlayer();
+            if (player1 ==  null) {
+                return false;
             }
-            this.game.getPlayerA().setName(playersName); 
+             
 
             // get the second players name
             System.out.println("\tPlease enter the number of the second player.");
-            playersName = this.getName(TicTacToe.getNameList());
-            if (playersName ==  null) {
-                return Game.QUIT;
+            Player player2 = this.getPlayer();
+            if (player2 ==  null) {
+                return false;
             }
-            this.game.getPlayerB().setName(playersName);
+            
+            this.game.setPlayerA(player1);
+            this.game.setPlayerB(player2);
+            
         }
         
-        return Game.CONTINUE;
+        return true;
         
     }
     
 
-    public String getName(String[] nameList) {
-
-        Scanner inFile = TicTacToe.getInputFile();
-        String name = null;
+    public Player getPlayer() {
+        
+        Player player = null;
+        Scanner inFile = new Scanner(System.in);
+        
         boolean valid = false;
-        do {
+        while (!valid) {
             String strNumber = inFile.nextLine();
             
             if (strNumber.length() < 1) { // was a value entered ?
@@ -83,8 +86,7 @@ public class SelectPlayersView {
             if (strNumber.toUpperCase().equals("Q")) { // quit?
                 return null;
             }
-            
-            
+                    
             if (!strNumber.matches("[0-9]+")) { // is the value entered a number?
                 new TicTacToeError().displayError("You must enter a number in the list. Try again.");
                 continue;
@@ -93,17 +95,23 @@ public class SelectPlayersView {
             int numberSelected = Integer.parseInt(strNumber); // convert string to integer
             
             // is the number outside the range of the list of names
-            if (numberSelected < 1  ||  numberSelected > nameList.length) {
+            if (numberSelected < 1  ||  numberSelected > this.playerList.length) {
                 new TicTacToeError().displayError("You must enter a number from the list. Try again.");
                 continue;
             }
             
-            name = nameList[numberSelected-1]; // get the name from the list
-            valid = true;
+            player = this.playerList[numberSelected-1]; // get the player from the list
+            if (alreadyInList(playerList, player)) { // player already selected?
+                new TicTacToeError().displayError(
+                        "That player has already been selected. Try again.");
+                continue;
+            }
+            
+            valid = true; // valid name selected
       
         } while (!valid);
         
-        return name;
+        return player;
     }
     
     
@@ -112,11 +120,22 @@ public class SelectPlayersView {
         System.out.println("\tSelect the player/s who will be playing the game.");
         System.out.println("\tEnter the number of a player below:");
 
-        for (int i = 0; i < this.playerNames.length; i++) {
+        for (int i = 0; i < this.playerList.length; i++) {
             int namePosition = i+1;
-            System.out.println("\t   " + namePosition + "\t" + playerNames[i]);
+            System.out.println("\t   " + namePosition + "\t" + playerList[i].getName());
         }
         System.out.println("\t===============================================================\n");
     }
+    
+    
+    private boolean alreadyInList(Player[] listOfPlayers, Player selectedPlayer) {
+        for (Player player : listOfPlayers) {
+            if (player.getName().equals(selectedPlayer.getName())) {
+                return true;
+            }           
+        }
+        return false;
+    }
+    
     
 }

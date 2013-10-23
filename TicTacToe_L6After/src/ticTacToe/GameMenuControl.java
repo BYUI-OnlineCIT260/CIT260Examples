@@ -18,85 +18,182 @@ public class GameMenuControl {
     
     private Game game;
     private Board board;
+    private GetLocationView getLocationView;
+    private BoardView boardView = new BoardView();
 
-
+    
     public GameMenuControl(Game game) {
         this.game = game;
-        this.board = game.getBoard(); 
+        this.board = game.getBoard();
     }
-
+    
+     
+    /* 
+     * Take a turn action
+     */
+    public void takeTurn() {
         
-    public Point playerTakesTurn(Player player, Point selectedLocation) {
-        Point locationMarkerPlaced = null;
-
-         if (player ==  null) {
+        int returnValue = 1;
+        
+        if (!this.game.getStatus().equals(Game.NEW_GAME)  && 
+            !this.game.getStatus().equals(Game.PLAYING)) {
             new TicTacToeError().displayError("You must start a new game first.");
-            return null;
-        }
-
-        if (!player.getPlayerType().equals(Player.REGULAR_PLAYER) && 
-            !player.getPlayerType().equals(Player.COMPUTER_PLAYER)) {
-            new TicTacToeError().displayError("GameCommands - takeTurn: invalidPlayerType");
-            return null;
-        }
-
-        if (this.game.getStatus().equals(Game.NEW_GAME)) {
-            this.game.setStatus(Game.PLAYING);
-        }        
-        else if (!this.game.getStatus().equals(Game.PLAYING)) {
-            new TicTacToeError().displayError("There is no active game. "
-                    + "You must start a new game before you can take a turn");
+            return;
         }
         
-       
-        
-        String playerType = player.getPlayerType();
-
-        if (playerType.equals(Player.REGULAR_PLAYER)) {
-            this.regularTurn(player, selectedLocation);
-            locationMarkerPlaced = selectedLocation;
-        }
-        else if (playerType.equals(Player.COMPUTER_PLAYER)) {
-            locationMarkerPlaced = this.coumputerTakesTurn(player);
-        }
-
-        this.alternatePlayers();
-
-        return locationMarkerPlaced;
-    }
-    
-    public void takeTurn(Point selectedLocation) {
-        Player currentPlayer = this.game.getCurrentPlayer();
-        Player otherPlayer = this.game.getOtherPlayer();
-        
-        String playerType = currentPlayer.getPlayerType(); 
-
-        if (this.game.getGameType().equals(Game.ONE_PLAYER)) {
-            if (currentPlayer.getPlayerType().equals(Player.REGULAR_PLAYER)) {
-                this.playerTakesTurn(currentPlayer, selectedLocation);
-                if (this.game.getStatus().equals(Game.PLAYING)) { // game over ?
-                    return;
-                }
-                
-                this.playerTakesTurn(otherPlayer, selectedLocation);
-                String message = "The computer also took it's turn. "
-                        + " it is your turn again " + currentPlayer.getName();
+        if (this.game.getGameType().equals(Game.TWO_PLAYER)) { //two player game 
+            // regular player takes turn
+            returnValue = this.regularPlayerTurn(this.game.getCurrentPlayer());            
+            if (returnValue < 0  || this.gameOver(this.game.getCurrentPlayer())) {
+                return;
             }
-            if (currentPlayer.getPlayerType().equals(Player.COMPUTER_PLAYER)) {
-                this.playerTakesTurn(currentPlayer, selectedLocation);
-                this.alternatePlayers();                
-            } 
-        } 
-        else if (this.game.getGameType().equals(Game.TWO_PLAYER)) {
-            this.playerTakesTurn(currentPlayer, selectedLocation);
-            this.alternatePlayers();
+            this.displayBoard();
+            this.alternatePlayers(); // alternate players             
+            
+            // other player takes turn 
+            returnValue = this.regularPlayerTurn(this.game.getCurrentPlayer());            
+            if (returnValue < 0  || this.gameOver(this.game.getCurrentPlayer())) {
+                return;
+            }
+            this.displayBoard();
+            this.alternatePlayers(); // alternate players
         }
         
-
-
-
+        else { // one player game
+            // regular player takes turn
+            this.regularPlayerTurn(this.game.getCurrentPlayer());
+            if (returnValue < 0  || this.gameOver(this.game.getCurrentPlayer())) {
+                return;
+            }
+        
+            // computer takes turn         
+            this.coumputerTakesTurn(this.game.getOtherPlayer());
+            System.out.println("\n\tThe computer also took it's turn");
+            this.displayBoard();            
+            if (returnValue < 0  || this.gameOver(this.game.getOtherPlayer())) {
+                return;
+            }
+        }
+    
+    }   
+    
+    
+    /*
+     * Display the board acton
+     */
+    public void displayBoard() {
+        boardView.displayBoard(this.board);
     }
     
+    /*
+     * Start a new game action
+     */
+    public void startNewGame() {
+        this.game.start();
+        this.displayBoard();
+    }
+  
+    
+  
+    
+    /*
+     * Display statistics action
+     */
+     public void displayStatistics() {
+        String playerAStatistics = this.game.getPlayerA().getPlayerStastics();
+        String playerBStatistics = this.game.getPlayerB().getPlayerStastics();
+        System.out.println("\n\t++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("\t " + playerAStatistics);
+        System.out.println("\n\t " + playerBStatistics);
+        System.out.println("\t+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+    }
+     
+     /*
+      * Display game preferences menu action
+      */
+    public void displayPreferencesMenu() {
+        GamePreferencesMenuView gamePreferenceMenuView = new GamePreferencesMenuView(this.game);
+        gamePreferenceMenuView.getInput();
+    }
+    
+    
+    /*
+      * Display help menu action
+      */
+    public void displayHelpMenu() {
+        HelpMenuView helpMenuView = new HelpMenuView();
+        helpMenuView.getInput();
+    }
+    
+    /* 
+     * determine if the game is over
+     * @return true - if the game is a win or a tie; otherwise, return false
+     */    
+    private boolean gameOver(Player player) {
+        if (this.isWinner()) {
+            this.game.setStatus(Game.WINNER);
+            this.displayGameOverMessage(player, "Congratulations! You won the game.");
+            
+            return true;
+        }
+        else if (this.isTie()) {
+            this.game.setStatus(Game.TIE);
+            this.displayGameOverMessage(player, "Better luck next time. The game is a tie.");
+            return true;
+        } 
+        
+        return false;
+    }
+    
+    private void displayGameOverMessage(Player player, String message) {
+        System.out.println("\n\t************************************************");
+        System.out.println("\t " + player.getName() + ": " + message);
+        System.out.println("\t************************************************");
+    }
+    
+    /*
+     * A regular player takes a turn
+     * @parameter player The player taking the turn
+     */
+    private int regularPlayerTurn(Player player) {
+        
+        if (!this.game.getStatus().equals(Game.NEW_GAME)  &&
+            !this.game.getStatus().equals(Game.PLAYING)) {
+            new TicTacToeError().displayError(
+                    "There is no active game. You must start a new game before "
+                    + "you can take a turn");
+            return -1;
+        } 
+        
+        this.game.setStatus(Game.PLAYING);
+        
+        GetLocationView getLocationView = new GetLocationView(this.game);
+        Point location = getLocationView.getInput();
+        if (location == null) { // no location was entered?
+            return -1;
+        }
+            
+        this.game.getBoard().occupyLocation(player, location.x, location.y);
+        
+        return 0;
+    }
+    
+     /*
+     * A regular player takes a turn
+     * @parameter player The player who is the computer
+     */
+    private void coumputerTakesTurn(Player player) {
+        // computer takes turn 
+        Point location = this.getComputersSelection();
+        this.game.getBoard().occupyLocation(player, location.x, location.y);
+        return;
+    }
+    
+
+
+    /*
+     * Alternate players
+     */
     public void alternatePlayers() {
         if (this.game.getCurrentPlayer() == this.game.getPlayerA()) {
             this.game.setCurrentPlayer(this.game.getPlayerB());
@@ -107,57 +204,13 @@ public class GameMenuControl {
         }
     }
     
-    public boolean regularTurn(Player player, Point location){
-        if (location == null) {
-            new TicTacToeError().displayError("GameCommands - regularTurn: location is null");
-            return false;
-        }
-        
-        if (game.getStatus().equals(Game.PLAYING) && 
-            game.getStatus().equals(Game.NEW_GAME)) {
-            new TicTacToeError().displayError("There is no active game. "
-                    + "You must start a new game before you can take a turn");
-            return false;
-        }
 
-        game.setStatus(Game.PLAYING);
-        this.markLocation(player, location);
-        
-        return true;
-    }
-    
-    public Point coumputerTakesTurn(Player player) {
-        // computer takes turn
-        game.setStatus(Game.PLAYING); 
-        Point location = this.getComputersSelection();
-        this.markLocation(player, location);
-        return location;
-    }
-    
 
     
     
-    private void markLocation(Player player, Point location) {
- 
-        this.game.getBoard().occupyLocation(player, location.x, location.y);
-        if (this.isTie()) { // game tied already
-            this.game.recordTie();
-            this.game.setStatus(Game.TIE);
-            return;
-        }
-
-        boolean aWinner = this.isWinner();
-        if (aWinner) { // game won already
-            this.game.recordWinner();
-            this.game.setStatus(Game.WINNER);
-            return;
-        }
-        
-        this.game.setStatus(Game.PLAYING);
-    }
-    
-    
-    
+    /* 
+     * Get computers selection
+     */
     private Point getComputersSelection() {
         Point coordinate;
 
@@ -180,59 +233,61 @@ public class GameMenuControl {
         return coordinate;
     }
 
-    
-    public void startNewGame(Game game) {
-        game.start();
-        this.clearTheBoard();
-    }
-  
-    
-    
-    public void clearTheBoard() {
-        Player[][] locations = this.game.getBoard().getBoardLocations();
-        
-        for (int i = 0; i < this.board.getBoardLocations().length; i++) {
-            Player[] rowlocations = locations[i];
-            for (int j = 0; j < rowlocations.length; j++) {
-                rowlocations[j] = null;
-            }
-        }
-    }
 
 
+    /* 
+     * Is the game tied?
+     */ 
     private boolean isTie() {
+        
         Player[][] locations = this.board.getBoardLocations();
-
+        
+        // for every row in the table
         for (int row = 0; row < locations.length; row++) {
+            
             Player[] rowLocations = locations[row];
+            
+            // for every column in the row
             for (int col = 0; col < rowLocations.length; col++) {
-                Player location = rowLocations[col];
-                if (locations[row][col] == null) { // square not taken yet
+                Player location = rowLocations[col]; // get contents of cell
+                if (locations[row][col] == null) { // location not taken yet?
                     return false;
                 }
             }
         }
 
-        return true;
+        return true; // all locations are taken
     }
 
-    
+    /*
+     * Is the game won
+     */
     private boolean isWinner() {
 
         Player[][] locations = this.board.getBoardLocations();
 
+        // for every row in the table
         for (int row = 0; row < locations.length; row++) {
+            
+            // get the list of locstaions (columns) in the row
             Player[] rowLocations = locations[row];
+            
+            // for every column in the row
             for (int col = 0; col < rowLocations.length; col++) {
-                if (threeInARow(row, col, locations)) {
-                    return true;
+                
+                // three of the same players markers in a row?
+                if (threeInARow(row, col, locations)) { 
+                    return true; // three in a row found (a winner)
                 }
             }
         }
 
-        return false;
+        return false; // no one is a winner yet
     }
 
+    /* 
+     * Are there three of the same markers in a row
+     */
     private boolean threeInARow(int row, int col, Player[][] boardLocations) {
         boolean winner = false;
 
@@ -267,6 +322,9 @@ public class GameMenuControl {
         return false;
     }
 
+    /* 
+     * Find a winning location
+     */
     private Point findWinningLocation(Player player) {
         Point coordinate = new Point();
         Player[][] locations = this.board.getBoardLocations();
@@ -346,6 +404,9 @@ public class GameMenuControl {
         return null; // not found
     }
 
+    /* 
+     * Choose a random location
+     */
     private Point chooseRandomLocation() {
         Point randomLocation;
 
@@ -377,4 +438,18 @@ public class GameMenuControl {
         }
     }
     
+      /* 
+     * Clear the board action
+     */
+    public void clearTheBoard() {
+        Player[][] locations = this.game.getBoard().getBoardLocations();
+        
+        for (int i = 0; i < this.board.getBoardLocations().length; i++) {
+            Player[] rowlocations = locations[i];
+            for (int j = 0; j < rowlocations.length; j++) {
+                rowlocations[j] = null;
+            }
+        }
+    }
+        
 }
