@@ -10,28 +10,42 @@ package ticTacToe;
  * @author jacksonrkj
  */
 public class Player {
+
+    public static final String REGULAR_PLAYER = "REGULAR";
+    public static final String COMPUTER_PLAYER = "COMPUTER"; 
     
-    String name;
-    double age;
-    String playerType;
-    long wins = 0;
-    long losses = 0;
-    long ties = 0;
-    String marker;
-    
+    public String name;
+    public double age;
+    public String playerType;
+    public long wins = 0;
+    public long losses = 0;
+    public long ties = 0;
+    public String marker;
     
 
     public Player() {
     }
 
-    
-    public void displayName() {
+    public Player(String playerType, String marker) {
+        this.playerType = playerType;
+        this.marker = marker;
+    } 
+
+   public void displayName() {
         System.out.println("\t\tGreetings, my name is "  + this.name); 
     }
-   
     
-    
+    public String getPlayerStastics() {
+        String playerStatistics = 
+                this.name + " has won "
+                + this.getWinningPercentage(this.wins, this.losses, this.ties) + "% of the games."
+                + "\n\t" + this.wins + " wins, "
+                + this.losses + " losses and "
+                + this.ties + " ties.";
         
+        return playerStatistics;
+    }
+
     
     public double getWinningPercentage(long wins, long losses, long ties) {
      
@@ -62,7 +76,5 @@ public class Player {
         double winLossRatio = wins / totalScore;
         return winLossRatio * 100;
     }
-
-
     
 }
