@@ -19,9 +19,9 @@ public class BoardView {
         this.printDividerRow(); // print the top divider row of the board
         
         // for all rows in the board
-        for (int i = 0; i < this.board.getRowCount(); i++) {
+        for (int i = 0; i < this.board.rowCount; i++) {
             // get the list of list of columns locations in the row
-            Player[] rowOfLocations = this.board.getBoardLocations()[i];
+            Location[] rowOfLocations = this.board.boardLocations[i];
             
             // print the contents of each location in the row
             this.printRow(i+1, rowOfLocations); 
@@ -40,7 +40,7 @@ public class BoardView {
         System.out.print("\n\t      1   ");
         
         // print remaining header cells in row between the first and last column
-        int columnsInRow = this.board.getColumnCount();
+        int columnsInRow = this.board.columnCount;
         for (int i = 1; i < columnsInRow - 1; i++) {
             int col = i + 1;
             System.out.print("  " + col + "   ");
@@ -54,7 +54,7 @@ public class BoardView {
         // print the divider for the first column in the row
         System.out.print("\n\t  |------");
         
-        int columnsInRow = this.board.getColumnCount();
+        int columnsInRow = this.board.columnCount;
         // print remaining divider for each column between the first and last
         for (int i = 1; i < columnsInRow - 1; i++) {
             System.out.print("------");
@@ -63,21 +63,21 @@ public class BoardView {
         System.out.print("-----|");
     }
 
-    private void printRow(int rowNumber, Player[] rowLocations) {
+    private void printRow(int rowNumber, Location[] rowLocations) {
         
         // print contents of first column in the row
         String letter = " ";
-        if (rowLocations[0] != null) {
-            letter = rowLocations[0].getMarker();
+        if (rowLocations[0].player != null) {
+            letter = rowLocations[0].player.marker;
         }
         System.out.print("\n\t" + rowNumber + " |  " + letter + "  |");
 
         // print the contents of the rest of the columns in the row 
         for (int i = 1; i < rowLocations.length; i++) {
-            if (rowLocations[i] == null) {
+            if (rowLocations[i].player == null) {
                 letter = " ";
             } else {
-                letter = rowLocations[i].getMarker();
+                letter = rowLocations[i].player.marker;
             }
             
             System.out.print("  " + letter + "  |");

@@ -30,7 +30,7 @@ public class GetMarkerView {
         boolean valid = false; // flag to indicate if valid character entered
         while (!valid) {
             // prompt for input
-            System.out.println("\n\t" + player.getName() 
+            System.out.println("\n\t" + player.name 
                     + ", enter a single character that will be used to mark "
                     + "your squares in the game.");
             
@@ -50,8 +50,8 @@ public class GetMarkerView {
             }
             
             // Check to see if the marker is already in use
-            if (this.game.getPlayerA().getMarker().equals(newMarker) ||
-                this.game.getPlayerB().getMarker().equals(newMarker) ) {
+            if (this.game.playerA.marker.equals(newMarker) ||
+                this.game.playerB.marker.equals(newMarker) ) {
                new TicTacToeError().displayError(
                         "This marker is currently in use. " +
                         "Select a different character");

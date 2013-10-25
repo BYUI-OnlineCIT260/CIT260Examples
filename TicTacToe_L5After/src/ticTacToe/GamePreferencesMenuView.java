@@ -45,10 +45,10 @@ public class GamePreferencesMenuView  {
             
             switch (command) {
                 case "1":
-                    this.gamePreferenceControl.getMarker(this.game.getPlayerA());
+                    this.gamePreferenceControl.getMarker(this.game.playerA);
                     break;
                 case "2":
-                    this.gamePreferenceControl.getMarker(this.game.getPlayerB());
+                    this.gamePreferenceControl.getMarker(this.game.playerB);
                     break;
                 case "D":
                     this.gamePreferenceControl.getDimensions();

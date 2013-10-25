@@ -47,29 +47,29 @@ public class MainMenuControl {
         if (gameType.equals(Game.ONE_PLAYER)) {
             game = new Game(Game.ONE_PLAYER);
             playerA = new Player(Player.REGULAR_PLAYER, game.PLAYER_A_DEFAULT_MARKER);
-            playerA.setName("Player 1");
+            playerA.name = "Player 1";
             playerB = new Player(Player.COMPUTER_PLAYER, game.PLAYER_B_DEFAULT_MARKER);
-            playerB.setName("Computer");
+            playerB.name = "Computer";
         }
         else if (gameType.equals(Game.TWO_PLAYER)) {
             game = new Game(Game.TWO_PLAYER);
             playerA = new Player(Player.REGULAR_PLAYER, game.PLAYER_A_DEFAULT_MARKER);
-            playerA.setName("Player 1");
+            playerA.name = "Player 1";
             playerB = new Player(Player.REGULAR_PLAYER, game.PLAYER_B_DEFAULT_MARKER);
-            playerB.setName("Player 2");
+            playerB.name = "Player 2";
 
         }
 
         // set default markers for each player
-        playerA.setMarker("X");
-        playerB.setMarker("O");
+        playerA.marker = Game.PLAYER_A_DEFAULT_MARKER;
+        playerB.marker = Game.PLAYER_B_DEFAULT_MARKER;
         
         // save the two players created as the default players of the game
-        game.setPlayerA(playerA);
-        game.setPlayerB(playerB); 
+        game.playerA = playerA;
+        game.playerB = playerB; 
         
         // set the game status to game not yet in playing mode
-        game.setStatus(Game.NO_ACTIVE_GAME);
+        game.status = Game.NO_ACTIVE_GAME;
         
         return game;
     } 
