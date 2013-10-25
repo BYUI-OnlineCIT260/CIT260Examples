@@ -20,7 +20,7 @@ public class Player {
     private long wins = 0;
     private long losses = 0;
     private long ties = 0;
-    private String marker;
+    public String marker;
     
     
 
