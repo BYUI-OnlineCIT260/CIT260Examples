@@ -15,7 +15,7 @@ public class GameMenuControl {
 
     public GameMenuControl(Game game) {
         this.game = game;
-        this.board = game.getBoard();
+        this.board = game.board;
     }
 
        
@@ -43,8 +43,8 @@ public class GameMenuControl {
     
     
     public void displayStatistics() {
-        String playerAStatistics = this.game.getPlayerA().getPlayerStastics();
-        String playerBStatistics = this.game.getPlayerB().getPlayerStastics();
+        String playerAStatistics = this.game.playerA.getPlayerStastics();
+        String playerBStatistics = this.game.playerB.getPlayerStastics();
         System.out.println("\n\t++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         System.out.println("\t " + playerAStatistics);
         System.out.println("\n\t " + playerBStatistics);

@@ -37,8 +37,8 @@ public class MainMenuControl {
     
     public Game create(String gameType) {
         Game game = null;
-        Player playerA = null;
-        Player playerB = null;
+        Player player1 = null;
+        Player player2 = null;
         
         if (gameType == null) {
             new TicTacToeError().displayError("MainCommands - create: gameType is null");
@@ -47,24 +47,22 @@ public class MainMenuControl {
         
         if (gameType.equals(Game.ONE_PLAYER)) {
             game = new Game(Game.ONE_PLAYER);
-            playerA = new Player(Player.REGULAR_PLAYER, game.PLAYER_A_DEFAULT_MARKER);
-            playerA.setName("Player 1");
-            playerB = new Player(Player.COMPUTER_PLAYER, game.PLAYER_B_DEFAULT_MARKER);
-            playerB.setName("Computer");
+            player1 = new Player(Player.REGULAR_PLAYER, game.PLAYER_A_DEFAULT_MARKER);
+            player1.setName("Player 1");
+            player2 = new Player(Player.COMPUTER_PLAYER, game.PLAYER_B_DEFAULT_MARKER);
+            player2.setName("Computer");
         }
         else if (gameType.equals(Game.TWO_PLAYER)) {
             game = new Game(Game.TWO_PLAYER);
-            playerA = new Player(Player.REGULAR_PLAYER, game.PLAYER_A_DEFAULT_MARKER);
-            playerA.setName("Player 1");
-            playerB = new Player(Player.REGULAR_PLAYER, game.PLAYER_B_DEFAULT_MARKER);
-            playerB.setName("Player 2");
+            player1 = new Player(Player.REGULAR_PLAYER, game.PLAYER_A_DEFAULT_MARKER);
+            player1.setName("Player 1");
+            player2 = new Player(Player.REGULAR_PLAYER, game.PLAYER_B_DEFAULT_MARKER);
+            player2.setName("Player 2");
 
         }
-        
-        
-        
-        game.setPlayerA(playerA);
-        game.setPlayerB(playerB);
+      
+        game.playerA = player1;
+        game.playerB = player2;
         
         return game;
     } 
