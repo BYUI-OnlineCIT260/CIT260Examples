@@ -8,13 +8,13 @@ package ticTacToe;
 
 public class Game {
 
-     String gameType;
-     Player playerA;
-     Player playerB;
-     Player currentPlayer;
-     Player otherPlayer;
-     Player winner;
-     Player loser;
+     private String gameType;
+     private Player playerA;
+     private Player playerB;
+     private Player currentPlayer;
+     private Player otherPlayer;
+     private Player winner;
+     private Player loser;
      String status;
      Board board;
    
