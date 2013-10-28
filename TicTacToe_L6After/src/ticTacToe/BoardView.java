@@ -58,7 +58,7 @@ public class BoardView {
         // print first cell
         String letter = " ";
         if (rowLocations[0] != null) {
-            letter = rowLocations[0].getMarker();
+            letter = rowLocations[0].marker;
         }
         System.out.print("\n\t" + rowNumber + " |  " + letter + "  |");
 
@@ -67,7 +67,7 @@ public class BoardView {
             if (rowLocations[i] == null) {
                 letter = " ";
             } else {
-                letter = rowLocations[i].getMarker();
+                letter = rowLocations[i].marker;
             }
             System.out.print("  " + letter + "  |");
         }

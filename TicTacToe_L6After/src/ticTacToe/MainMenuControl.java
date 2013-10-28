@@ -14,8 +14,8 @@ public class MainMenuControl {
     
     
     public void createPlayerList() {
-        CreatePlayersListView getPlayersNamesView = new CreatePlayersListView();
-        String[] listOfPlayersNames = getPlayersNamesView.getInput();
+        GetPlayersListView getPlayersListView = new GetPlayersListView();
+        String[] listOfPlayersNames = getPlayersListView.getInput();
         
         // create the list of players named
         Player[] playerList = new Player[listOfPlayersNames.length];
@@ -23,7 +23,7 @@ public class MainMenuControl {
         for (int i = 0; i < playerList.length; i++) {
             String playersName = listOfPlayersNames[i];
             Player newPlayer = new Player();
-            newPlayer.setName(playersName);
+            newPlayer.name = playersName;
             // add new player to player list
             playerList[i] = newPlayer;          
         }
@@ -66,33 +66,37 @@ public class MainMenuControl {
         if (gameType.equals(Game.ONE_PLAYER)) {
             game = new Game(Game.ONE_PLAYER);
             playerA = new Player(Player.REGULAR_PLAYER, game.PLAYER_A_DEFAULT_MARKER);
-            playerA.setName("Player 1");
+            playerA.name = "Player 1";
             playerB = new Player(Player.COMPUTER_PLAYER, game.PLAYER_B_DEFAULT_MARKER);
-            playerB.setName("Computer");
+            playerB.name = "Computer";
         }
         else if (gameType.equals(Game.TWO_PLAYER)) {
             game = new Game(Game.TWO_PLAYER);
             playerA = new Player(Player.REGULAR_PLAYER, game.PLAYER_A_DEFAULT_MARKER);
-            playerA.setName("Player 1");
+            playerA.name = "Player 1";
             playerB = new Player(Player.REGULAR_PLAYER, game.PLAYER_B_DEFAULT_MARKER);
-            playerB.setName("Player 2");
+            playerB.name = "Player 2";
 
         }
-
+        
+        // set default players
+        game.playerA = playerA;
+        game.playerB = playerB;
+        
         // set default markers for each player
-        playerA.setMarker("X");
-        playerB.setMarker("O");
+        playerA.marker = "X";
+        playerB.marker = "O";
         
         // select the name of the players of the game
         SelectPlayersView selectPlayersView = new SelectPlayersView(game);
         selectPlayersView.getInput();
-        
-        // save the two players created as the default players of the game
-        game.setPlayerA(playerA);
-        game.setPlayerB(playerB); 
+                
+        // set default markers for each player
+        game.playerA.marker = "X";
+        game.playerB.marker = "O";
         
         // set the game status to game not yet in playing mode
-        game.setStatus(Game.NO_ACTIVE_GAME);
+        game.status = Game.NO_ACTIVE_GAME;
         
         return game;
     } 

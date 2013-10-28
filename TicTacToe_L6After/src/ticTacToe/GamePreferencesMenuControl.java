@@ -28,7 +28,7 @@ public class GamePreferencesMenuControl {
             return;
         }
       
-        player.setMarker(marker); // update the players markers
+        player.marker = marker; // update the players markers
         
         return;
     }
@@ -37,7 +37,7 @@ public class GamePreferencesMenuControl {
     public void getDimensions()  {
         
         // Check to see if a game is already in progress
-        if (this.game.getStatus().equals(Game.PLAYING)) {
+        if (this.game.status.equals(Game.PLAYING)) {
             new TicTacToeError().displayError("You can not change the dimensions "
               + "of the board once the game has been started. "
               + "\nStart a new game and then change the dimensions "
@@ -56,15 +56,15 @@ public class GamePreferencesMenuControl {
         int boardColumnCount= dimension.height;
          
         // no change in the board size so return
-        if (boardRowCount == this.game.getBoard().getRowCount() &&
-            boardColumnCount == this.game.getBoard().getColumnCount()) {
+        if (boardRowCount == this.game.board.getRowCount() &&
+            boardColumnCount == this.game.board.getColumnCount()) {
             return;
         }
         
         // change the size board
         Player[][] boardLocations = new Player[boardRowCount][boardColumnCount];
-        this.game.getBoard().getBoardDimensions().setLocation(boardRowCount, boardRowCount);
-        this.game.getBoard().setBoardLocations(boardLocations);
+        this.game.board.getBoardDimensions().setLocation(boardRowCount, boardRowCount);
+        this.game.board.setBoardLocations(boardLocations);
                
         return;
     }

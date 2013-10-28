@@ -26,7 +26,7 @@ public class SelectPlayersView {
         this.displayNameList(); // display the list of names
         
         // if one player game
-        if (Game.ONE_PLAYER.equals(this.game.getGameType())) {
+        if (Game.ONE_PLAYER.equals(this.game.gameType )) {
            System.out.println("\tPlease enter the number of the player.");
 
             // get the players name
@@ -35,8 +35,8 @@ public class SelectPlayersView {
                 return false;
             }
            
-            this.game.setPlayerA(player);
-            this.game.getPlayerB().setName("Computer");
+            this.game.playerA = player;
+            this.game.playerB.name = "Computer";
         }
         
         // else two player game
@@ -56,8 +56,8 @@ public class SelectPlayersView {
                 return false;
             }
             
-            this.game.setPlayerA(player1);
-            this.game.setPlayerB(player2);
+            this.game.playerA = player1;
+            this.game.playerB = player2;
             
         }
         
@@ -76,7 +76,9 @@ public class SelectPlayersView {
             String strNumber = inFile.nextLine();
             
             if (strNumber.length() < 1) { // was a value entered ?
-                new TicTacToeError().displayError("You must enter a name or enter a \"Q\" to quit. Try again.");
+                new TicTacToeError().displayError(
+                        "You must enter a number associated with the name or "
+                        + "enter a \"Q\" to quit. Try again.");
                 continue;
             }
             
@@ -88,7 +90,9 @@ public class SelectPlayersView {
             }
                     
             if (!strNumber.matches("[0-9]+")) { // is the value entered a number?
-                new TicTacToeError().displayError("You must enter a number in the list. Try again.");
+                new TicTacToeError().displayError(
+                        "You must enter a number associated with the name or "
+                        + "enter a \"Q\" to quit. Try again.");
                 continue;
             }
             
@@ -96,16 +100,25 @@ public class SelectPlayersView {
             
             // is the number outside the range of the list of names
             if (numberSelected < 1  ||  numberSelected > this.playerList.length) {
-                new TicTacToeError().displayError("You must enter a number from the list. Try again.");
+                new TicTacToeError().displayError(
+                        "Invalid number. You must enter a number between "
+                        + "1 and " + this.playerList.length 
+                        + "or enter a \"Q\" to quit. Try again.");
                 continue;
             }
             
             player = this.playerList[numberSelected-1]; // get the player from the list
-            if (alreadyInList(playerList, player)) { // player already selected?
+            
+            if (game.playerA.equals(player) || // player already selected?
+                game.playerB.equals(player) ) {  
                 new TicTacToeError().displayError(
-                        "That player has already been selected. Try again.");
+                        "That player has already been selected. "
+                        + "Select a different player "
+                        + "or enter a \"Q\" to quit. Try again.");
                 continue;
             }
+            
+            
             
             valid = true; // valid name selected
       
@@ -122,20 +135,10 @@ public class SelectPlayersView {
 
         for (int i = 0; i < this.playerList.length; i++) {
             int namePosition = i+1;
-            System.out.println("\t   " + namePosition + "\t" + playerList[i].getName());
+            System.out.println("\t   " + namePosition + "\t" + playerList[i].name);
         }
         System.out.println("\t===============================================================\n");
     }
-    
-    
-    private boolean alreadyInList(Player[] listOfPlayers, Player selectedPlayer) {
-        for (Player player : listOfPlayers) {
-            if (player.getName().equals(selectedPlayer.getName())) {
-                return true;
-            }           
-        }
-        return false;
-    }
-    
+     
     
 }

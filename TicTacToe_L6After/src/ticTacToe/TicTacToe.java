@@ -5,10 +5,6 @@
 package ticTacToe;
 
 
-
-import java.util.Scanner;
-
-
 /**
  *
  * @author jacksonrkj

@@ -23,15 +23,15 @@ public class Game {
     public static final String ERROR = "ERROR";
     public static final String EXIT = "EXIT";
 
-    private String gameType;
-    private Player playerA;
-    private Player playerB;
-    private Player currentPlayer;
-    private Player otherPlayer;
-    private Player winner;
-    private Player loser;
-    private String status;
-    private Board board;
+    public String gameType;
+    public Player playerA;
+    public Player playerB;
+    public Player currentPlayer;
+    public Player otherPlayer;
+    public Player winner;
+    public Player loser;
+    public String status;
+    public Board board;
    
 
     
@@ -41,8 +41,8 @@ public class Game {
        this.playerA = new Player();
        this.playerB = new Player();
        
-       this.playerA.setMarker(Game.PLAYER_A_DEFAULT_MARKER);
-       this.playerB.setMarker(Game.PLAYER_B_DEFAULT_MARKER);
+       this.playerA.marker = Game.PLAYER_A_DEFAULT_MARKER;
+       this.playerB.marker = Game.PLAYER_B_DEFAULT_MARKER;
     }
 
     public Game(String gameType) {
@@ -53,80 +53,6 @@ public class Game {
         
     }
 
-    public String getGameType() {
-        return gameType;
-    }
-
-    public void setGameType(String gameType) {
-        this.gameType = gameType;
-    }
-
-    public Player getPlayerA() {
-        return playerA;
-    }
-
-    public void setPlayerA(Player playerA) {
-        this.playerA = playerA;
-    }
-
-    public Player getPlayerB() {
-        return playerB;
-    }
-
-    public void setPlayerB(Player playerB) {
-        this.playerB = playerB;
-    }
-
-    public Player getCurrentPlayer() {
-        return currentPlayer;
-    }
-
-    public void setCurrentPlayer(Player currentPlayer) {
-        this.currentPlayer = currentPlayer;
-    }
-
-    public Player getOtherPlayer() {
-        return otherPlayer;
-    }
-
-    public void setOtherPlayer(Player otherPlayer) {
-        this.otherPlayer = otherPlayer;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Player getWinner() {
-        return winner;
-    }
-
-    public void setWinner(Player winner) {
-        this.winner = winner;
-    }
-
-    public Player getLoser() {
-        return loser;
-    }
-
-    public void setLoser(Player loser) {
-        this.loser = loser;
-    }
-
-    public Board getBoard() {
-        return board;
-    }
-
-    public void setBoard(Board board) {
-        this.board = board;
-    }
-
-
-
 
     public void start() {
 
@@ -134,7 +60,7 @@ public class Game {
 
         // clear the board
         this.board.clearTheBoard();
-        this.setStatus(Game.NEW_GAME);
+        this.status = Game.NEW_GAME;
         this.setPlayingOrder(this.playerA, this.playerB);
     }
 
@@ -161,26 +87,26 @@ public class Game {
             this.loser = this.playerA;
         }
 
-        long noWins = this.winner.getWins();
+        long noWins = this.winner.wins;
         noWins++;
-        this.winner.setWins(noWins);
-        long noLosses = this.loser.getLosses();
+        this.winner.wins = noWins;
+        long noLosses = this.loser.losses;
         noLosses++;
-        this.loser.setLosses(noLosses);
+        this.loser.losses = noLosses;
 
-        this.setStatus(Game.WINNER);
+        this.status = Game.WINNER;
         
     }
 
     public void recordTie() {
-        long player1Ties = this.playerA.getTies();
+        long player1Ties = this.playerA.ties;
         player1Ties++;
-        this.playerA.setTies(player1Ties);
-        long player2Ties = this.playerB.getTies();
+        this.playerA.ties = player1Ties;
+        long player2Ties = this.playerB.ties;
         player2Ties++;
-        this.playerB.setTies(player2Ties);
+        this.playerB.ties = player2Ties;
 
-        this.setStatus(Game.TIE);
+        this.status = Game.TIE;
        
     }
 
@@ -188,8 +114,8 @@ public class Game {
 
     public String getWinningMessage () {
         return "\n\t*******************************************************************************"
-             + "\n\t Congratulations " + winner.getName() + "! You won the game."
-             + "\n\t Sorry " + loser.getName() + ", You are the loser." 
+             + "\n\t Congratulations " + winner.name + "! You won the game."
+             + "\n\t Sorry " + loser.name + ", You are the loser." 
              + "\n\t*******************************************************************************";
     }
 

@@ -36,7 +36,7 @@ public class GetLocationView {
         // prompt the use to enter the locaton to placeread the row and column coordinates
         while (!valid) {
             // prompt for the row and column numbers
-            System.out.println("\n\n\t" + this.game.getCurrentPlayer().getName() + " it is your turn."
+            System.out.println("\n\n\t" + this.game.currentPlayer.name + " it is your turn."
                 + " Enter a row and column number (For example: 1 3)");
             
             // get the value entered by the user 
@@ -86,7 +86,7 @@ public class GetLocationView {
             int row = Integer.parseInt(coordinates[0]);
             int column = Integer.parseInt(coordinates[1]);
                      
-            Board board = this.game.getBoard(); // get the game board
+            Board board = this.game.board; // get the game board
             
             // Check for invalid row and column entered
             if (row < 1   ||  row > board.getRowCount() ||

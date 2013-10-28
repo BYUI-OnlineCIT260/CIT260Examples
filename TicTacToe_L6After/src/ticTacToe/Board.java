@@ -13,11 +13,10 @@ import javax.swing.table.AbstractTableModel;
  * @author jacksonrkj
  */
 public class Board extends AbstractTableModel {
-    int rowCount = 3;
-    int columnCount = 3;
-    private String name;
-    private Point boardDimensions = new Point();
-    private Player[][] boardLocations;
+    public int rowCount = 3;
+    public int columnCount = 3;
+    public Point boardDimensions = new Point();
+    public Player[][] boardLocations;
 
     public Board() {
     }
@@ -25,14 +24,6 @@ public class Board extends AbstractTableModel {
     public Board(int noRows, int noColumns) {
         this.boardDimensions.setLocation(noRows, noRows);
         this.boardLocations = new Player[noRows][noColumns];
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Point getBoardDimensions() {
