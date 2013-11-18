@@ -110,11 +110,8 @@ public class MainMenuView {
             game = this.mainCommands.create("TWO_PLAYER");
         }
         
-        SelectPlayersView sekectPlayersView = new SelectPlayersView(game);
-        String status = (String) sekectPlayersView.selectPlayers(TicTacToe.getNameList());
-        if (status.equals("QUIT")) {
-            return;
-        }
+        SelectPlayersView selectPlayersView = new SelectPlayersView(game);
+        String[] noNamesSelected = selectPlayersView.selectPlayers(TicTacToe.getNameList());
 
         GameMenuView gameMenu = new GameMenuView(game);
         gameMenu.getInput(game);

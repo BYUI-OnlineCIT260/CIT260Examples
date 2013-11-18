@@ -21,8 +21,8 @@ public class SelectPlayersView {
     }
 
     
-    public String selectPlayers(String[] nameList) {
-        String playersName;
+    public String[] selectPlayers(String[] nameList) {
+        String[] selectedPlayerNames = new String[2];
         
         this.displayNameList(); // display the list of names
         
@@ -31,35 +31,37 @@ public class SelectPlayersView {
            System.out.println("\tPlease enter the number of the player.");
 
             // get the players name
-            playersName = this.getName(TicTacToe.getNameList());
+            selectedPlayerNames[0] = this.getName(TicTacToe.getNameList());
 
-            if (playersName ==  null) {
-                return Game.QUIT;
+            if (selectedPlayerNames[0] ==  null) {
+                return null;
             }
-            this.game.getPlayerA().setName(playersName);
-            this.game.getPlayerB().setName("Computer");
+            
+            selectedPlayerNames[1] = "Computer";
         }
         
         // else two player game
         else { 
             System.out.println("\tPlease enter the number of the first player.");
+            
             // get first players name
-            playersName = this.getName(TicTacToe.getNameList());
-            if (playersName ==  null) {
-                return Game.QUIT;
+            selectedPlayerNames[0] = this.getName(TicTacToe.getNameList());
+            if (selectedPlayerNames[0] ==  null) {
+                return null;
             }
-            this.game.getPlayerA().setName(playersName); 
-
+            
             // get the second players name
             System.out.println("\tPlease enter the number of the second player.");
-            playersName = this.getName(TicTacToe.getNameList());
-            if (playersName ==  null) {
-                return Game.QUIT;
+            selectedPlayerNames[1] = this.getName(TicTacToe.getNameList());
+            if (selectedPlayerNames[0].equals(selectedPlayerNames[1])) {
+                
             }
-            this.game.getPlayerB().setName(playersName);
+            if (selectedPlayerNames[1] ==  null) {
+                return null;
+            }
         }
         
-        return Game.CONTINUE;
+        return null;
         
     }
     
@@ -83,8 +85,7 @@ public class SelectPlayersView {
             if (strNumber.toUpperCase().equals("Q")) { // quit?
                 return null;
             }
-            
-            
+                       
             if (!strNumber.matches("[0-9]+")) { // is the value entered a number?
                 new TicTacToeError().displayError("You must enter a number in the list. Try again.");
                 continue;
@@ -94,17 +95,25 @@ public class SelectPlayersView {
             
             // is the number outside the range of the list of names
             if (numberSelected < 1  ||  numberSelected > nameList.length) {
-                new TicTacToeError().displayError("You must enter a number from the list. Try again.");
+                new TicTacToeError().displayError(
+                        "You must enter a number from the list. Try again.");
                 continue;
             }
             
             name = nameList[numberSelected-1]; // get the name from the list
-            valid = true;
+            if (alreadyInList(nameList, name)) {
+                new TicTacToeError().displayError(
+                        "That name has already been selected. Try again.");
+                continue;
+            }
+            
+            valid = true; // names selected successfully
       
         } while (!valid);
         
         return name;
     }
+
     
     
     public void displayNameList() {
@@ -117,6 +126,15 @@ public class SelectPlayersView {
             System.out.println("\t   " + namePosition + "\t" + playerNames[i]);
         }
         System.out.println("\t===============================================================\n");
+    }
+    
+    private boolean alreadyInList(String[] listOfNames, String name) {
+        for (String currentName : listOfNames) {
+            if (currentName.equals(name)) {
+                return true;
+            }           
+        }
+        return false;
     }
     
 }

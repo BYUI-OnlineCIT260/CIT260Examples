@@ -4,12 +4,14 @@
  */
 package ticTacToe;
 
+import java.io.Serializable;
+
 
 /**
  *
  * @author jacksonrkj
  */
-public class Player {
+public class Player implements Serializable {
 
     public static final String REGULAR_PLAYER = "REGULAR";
     public static final String COMPUTER_PLAYER = "COMPUTER"; 
