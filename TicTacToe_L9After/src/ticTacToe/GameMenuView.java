@@ -42,8 +42,8 @@ public class GameMenuView extends Menu {
 
     
 
-
-    public Object executeCommands(Object object) {
+    @Override
+    public String executeCommands(Object object) {
         this.game = (Game) object;
 
         String gameStatus = Game.CONTINUE;

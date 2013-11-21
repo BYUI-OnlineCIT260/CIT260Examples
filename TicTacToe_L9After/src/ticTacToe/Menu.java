@@ -21,7 +21,11 @@ public abstract class Menu {
         this();
         this.menuItems = menuItems;
     }
-
+    
+    // This is an abstract function. It specifies that all sub-classes must
+    // implement this function.
+    public abstract String executeCommands(Object object);
+    
     public String[][] getMenuItems() {
         return menuItems;
     }
@@ -30,7 +34,7 @@ public abstract class Menu {
         this.menuItems = menuItems;
     }
 
-
+    
     public final void display() {
         System.out.println("\n\t===============================================================");
         System.out.println("\tEnter the letter associated with one of the following commands:");
