@@ -30,7 +30,7 @@ public class MainMenuView extends Menu {
     }
     
     
-    public String getMainMenuItem(Object object) {       
+    public String executeCommands(Object object) {       
         
         String gameStatus = Game.PLAYING;
         do {
@@ -47,7 +47,7 @@ public class MainMenuView extends Menu {
                     break;
                 case "H":
                     HelpMenuView helpMenu = TicTacToe.getHelpMenu();
-                    helpMenu.getHelpMenuItem(null);
+                    helpMenu.executeCommands(null);
                     break;
                 case "X":
                     return Game.EXIT;
@@ -79,7 +79,7 @@ public class MainMenuView extends Menu {
         }
 
         GameMenuView gameMenu = new GameMenuView(game);
-        gameMenu.getMenuItem(game);
+        gameMenu.executeCommands(game);
     }
 
     private String quitGame() {

@@ -78,7 +78,7 @@ public class TicTacToe {
         TicTacToe.nameList = ticTacToe.getPlayerNames();
         MainMenuView mainMenu = new MainMenuView();
 
-        mainMenu.getMainMenuItem(null);
+        mainMenu.executeCommands(null);
         TicTacToe.inFile.close();
     }
     

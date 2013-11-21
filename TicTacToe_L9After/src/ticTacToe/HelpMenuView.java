@@ -33,7 +33,7 @@ public class HelpMenuView extends Menu {
         super(HelpMenuView.menuItems);
     } 
     
-    public String getHelpMenuItem(Object object) {       
+    public String executeCommands(Object object) {       
         
         String gameStatus = Game.PLAYING;
         do {
