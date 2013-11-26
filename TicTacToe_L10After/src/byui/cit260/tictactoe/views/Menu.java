@@ -4,7 +4,6 @@
  */
 package byui.cit260.tictactoe.views;
 
-import byui.cit260.tictactoe.enums.ErrorType;
 import java.util.Scanner;
 import byui.cit260.tictactoe.controls.TicTacToe;
 import byui.cit260.tictactoe.controls.TicTacToeError;
@@ -65,7 +64,7 @@ public abstract class Menu {
             command = command.trim().toUpperCase();
             valid = validCommand(command);
             if (!validCommand(command)) {
-                new TicTacToeError(ErrorType.ERROR105).display();
+                new TicTacToeError().display("Invalid command. Please enter a valid command.");
                 continue;
             }
                 

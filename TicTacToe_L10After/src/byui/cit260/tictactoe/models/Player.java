@@ -4,8 +4,6 @@
  */
 package byui.cit260.tictactoe.models;
 
-import byui.cit260.tictactoe.enums.PlayerType;
-
 
 /**
  *
@@ -13,10 +11,11 @@ import byui.cit260.tictactoe.enums.PlayerType;
  */
 public class Player {
     
-  
+    public static final String REGULAR_PLAYER = "REGULAR";
+    public static final String COMPUTER_PLAYER = "COMPUTER"; 
 
     private String name;
-    private PlayerType playerType;
+    private String playerType;
     private long wins = 0;
     private long losses = 0;
     private long ties = 0;
@@ -26,7 +25,7 @@ public class Player {
     public Player() {
     }
 
-    public Player(PlayerType playerType, String marker) {
+    public Player(String playerType, String marker) {
         this.playerType = playerType;
         this.marker = marker;
     }
@@ -39,11 +38,11 @@ public class Player {
         this.name = name;
     }
 
-    public PlayerType getPlayerType() {
+    public String getPlayerType() {
         return playerType;
     }
 
-    public void setPlayerType(PlayerType playerType) {
+    public void setPlayerType(String playerType) {
         this.playerType = playerType;
     }
 

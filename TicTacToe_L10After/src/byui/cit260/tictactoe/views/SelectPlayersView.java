@@ -4,9 +4,6 @@
  */
 package byui.cit260.tictactoe.views;
 
-import byui.cit260.tictactoe.enums.ErrorType;
-import byui.cit260.tictactoe.enums.GameType;
-import byui.cit260.tictactoe.enums.StatusType;
 import byui.cit260.tictactoe.models.Game;
 import java.util.Scanner;
 import byui.cit260.tictactoe.controls.TicTacToe;
@@ -27,20 +24,20 @@ public class SelectPlayersView {
     }
 
     
-    public StatusType selectPlayers(String[] nameList) {
+    public String selectPlayers(String[] nameList) {
         String playersName;
         
         this.displayNameList(); // display the list of names
         
         // if one player game
-        if (GameType.ONE_PLAYER.equals(this.game.getGameType())) {
+        if (Game.ONE_PLAYER.equals(this.game.getGameType())) {
            System.out.println("\tPlease enter the number of the player.");
 
             // get the players name
             playersName = this.getName(TicTacToe.getNameList());
 
             if (playersName ==  null) {
-                return StatusType.QUIT;
+                return Game.QUIT;
             }
             this.game.getPlayerA().setName(playersName);
             this.game.getPlayerB().setName("Computer");
@@ -52,7 +49,7 @@ public class SelectPlayersView {
             // get first players name
             playersName = this.getName(TicTacToe.getNameList());
             if (playersName ==  null) {
-                return StatusType.QUIT;
+                return Game.QUIT;
             }
             this.game.getPlayerA().setName(playersName); 
 
@@ -60,12 +57,12 @@ public class SelectPlayersView {
             System.out.println("\tPlease enter the number of the second player.");
             playersName = this.getName(TicTacToe.getNameList());
             if (playersName ==  null) {
-                return StatusType.QUIT;
+                return Game.QUIT;
             }
             this.game.getPlayerB().setName(playersName);
         }
         
-        return StatusType.CONTINUE;
+        return Game.CONTINUE;
         
     }
     
@@ -79,7 +76,7 @@ public class SelectPlayersView {
             String strNumber = inFile.nextLine();
             
             if (strNumber.length() < 1) { // was a value entered ?
-                new TicTacToeError(ErrorType.ERROR107).display();
+                new TicTacToeError().display("You must enter a name or enter a \"Q\" to quit. Try again.");
                 continue;
             }
             
@@ -92,7 +89,7 @@ public class SelectPlayersView {
             
             
             if (!strNumber.matches("[0-9]+")) { // is the value entered a number?
-                new TicTacToeError(ErrorType.ERROR210).display();
+                new TicTacToeError().display("You must enter a number in the list. Try again.");
                 continue;
             }
             
@@ -100,7 +97,7 @@ public class SelectPlayersView {
             
             // is the number outside the range of the list of names
             if (numberSelected < 1  ||  numberSelected > nameList.length) {
-                new TicTacToeError(ErrorType.ERROR210).display();
+                new TicTacToeError().display("You must enter a number from the list. Try again.");
                 continue;
             }
             

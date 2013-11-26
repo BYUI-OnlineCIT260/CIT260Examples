@@ -4,7 +4,6 @@
  */
 package byui.cit260.tictactoe.models;
 
-import byui.cit260.tictactoe.enums.ErrorType;
 import java.awt.Point;
 import javax.swing.table.AbstractTableModel;
 import byui.cit260.tictactoe.controls.TicTacToeError;
@@ -91,7 +90,8 @@ public class Board extends AbstractTableModel {
          Player playerAtLocation = this.boardLocations[row][column];
 
         if (playerAtLocation != null) { // location already occupied
-            new TicTacToeError(ErrorType.ERROR203).display();
+            new TicTacToeError().display("This location is already occupied. "
+                    + "Try a different location.");
         }
         this.boardLocations[row][column] = player;
     }

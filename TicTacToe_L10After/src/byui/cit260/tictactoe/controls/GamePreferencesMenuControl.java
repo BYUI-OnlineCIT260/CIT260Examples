@@ -4,8 +4,6 @@
  */
 package byui.cit260.tictactoe.controls;
 
-import byui.cit260.tictactoe.enums.ErrorType;
-import byui.cit260.tictactoe.enums.StatusType;
 import byui.cit260.tictactoe.models.Player;
 import byui.cit260.tictactoe.models.Game;
 import java.awt.Dimension;
@@ -34,13 +32,13 @@ public class GamePreferencesMenuControl {
     public boolean saveMarker(Player player, String marker) { 
 
         if (player == null  ||  marker == null) {
-            new TicTacToeError(ErrorType.ERROR108).display();
+            new TicTacToeError().display("saveMarker - player or marker is invalid");
             return false;
         }
 
    
         if (game.getPlayerA().getMarker().equals(game.getPlayerB().getMarker())) {
-            new TicTacToeError(ErrorType.ERROR205).display();
+            new TicTacToeError().display("Both players can not use the same character for a marker.");
             return false;
         }
         
@@ -53,14 +51,19 @@ public class GamePreferencesMenuControl {
     
     public boolean saveDimensions(Dimension dimension)  {
         // validate inputs
-        if (this.game.getStatus().equals(StatusType.PLAYING)) {
-            new TicTacToeError(ErrorType.ERROR101).display();
+        if (this.game.getStatus().equals(Game.PLAYING)) {
+            new TicTacToeError().display("You can not change the dimensions "
+              + "of the board once the game has been started. "
+              + "\nStart a new game and then change the dimensions "
+              + "of the board. ");
             return false;
         }
         
         
         if (dimension == null) {
-            new TicTacToeError(ErrorType.ERROR207).display();
+            new TicTacToeError().display(
+                    "The number of rows must be between 3 -10 and the "
+                    + "number of columns must be between 3 -10 ");
             return false;
         }
         
@@ -68,12 +71,16 @@ public class GamePreferencesMenuControl {
         int boardColumnCount= dimension.height;
         
         if (boardRowCount < 3 || boardRowCount > 10) {
-            new TicTacToeError(ErrorType.ERROR207).display();
+            new TicTacToeError().display(
+                    "The number of rows must be between 3 -10 and the "
+                    + "number of columns must be between 3 -10 ");
             return false;
         }
 
         if (boardColumnCount < 3 || boardColumnCount > 10) {
-            new TicTacToeError(ErrorType.ERROR207).display();
+            new TicTacToeError().display(
+                    "The number of rows must be between 3 -10 and the "
+                    + "number of columns must be between 3 -10 ");
             return false;
         }
 

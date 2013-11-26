@@ -4,7 +4,7 @@
  */
 package byui.cit260.tictactoe.views;
 
-import byui.cit260.tictactoe.enums.StatusType;
+import byui.cit260.tictactoe.models.Game;
 import byui.cit260.tictactoe.interfaces.EnterInfo;
 
 
@@ -37,9 +37,9 @@ public class HelpMenuView extends Menu  implements EnterInfo {
     } 
     
     @Override
-    public StatusType getInput(Object object) {       
+    public String getInput(Object object) {       
         
-        StatusType gameStatus = StatusType.PLAYING;
+        String gameStatus = Game.PLAYING;
         do {
             this.display();
             // get commaned entered
@@ -64,9 +64,9 @@ public class HelpMenuView extends Menu  implements EnterInfo {
                     this.displayHelp(HelpMenuView.REAL_PLAYER);
                     break; 
                 case "Q": 
-                    return StatusType.QUIT;
+                    return Game.QUIT;
             }
-        } while (!gameStatus.equals(StatusType.QUIT));  
+        } while (!gameStatus.equals(Game.QUIT));  
         
          return gameStatus;
     }

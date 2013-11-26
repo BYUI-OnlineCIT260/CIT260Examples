@@ -4,26 +4,37 @@
  */
 package byui.cit260.tictactoe.models;
 
-import byui.cit260.tictactoe.enums.GameType;
-import byui.cit260.tictactoe.enums.StatusType;
-
 
 
 public class Game {
-    
     public static final String PLAYER_A_DEFAULT_MARKER = "X";
     public static final String PLAYER_B_DEFAULT_MARKER = "O";
+    
+    public static final String ONE_PLAYER = "ONE_PLAYER";
+    public static final String TWO_PLAYER = "TWO_PLAYER";
+    
+    public static final String CONTINUE = "CONTINUE";
+    public static final String NEW_GAME = "NEW_GAME";
+    public static final String PLAYING = "PLAYING"; 
+    public static final String WINNER = "WINNER"; 
+    public static final String TIE = "TIE"; 
+    public static final String QUIT = "QUIT"; 
+    public static final String ERROR = "ERROR";
+    public static final String EXIT = "EXIT";
 
-    private GameType gameType;
+    private String gameType;
     private Player playerA;
     private Player playerB;
     private Player currentPlayer;
     private Player otherPlayer;
     private Player winner;
     private Player loser;
-    private StatusType status;
+    private String status;
     private Board board;
- 
+   
+
+    
+
     public Game() {
 
        this.playerA = new Player();
@@ -33,7 +44,7 @@ public class Game {
        this.playerB.setMarker(PLAYER_B_DEFAULT_MARKER);
     }
 
-    public Game(GameType gameType) {
+    public Game(String gameType) {
         this();
 
         this.gameType = gameType;
@@ -41,11 +52,11 @@ public class Game {
         
     }
 
-    public GameType getGameType() {
+    public String getGameType() {
         return gameType;
     }
 
-    public void setGameType(GameType gameType) {
+    public void setGameType(String gameType) {
         this.gameType = gameType;
     }
 
@@ -81,11 +92,11 @@ public class Game {
         this.otherPlayer = otherPlayer;
     }
 
-    public StatusType getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(StatusType status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -122,7 +133,7 @@ public class Game {
 
         // clear the board
         this.board.clearTheBoard();
-        this.setStatus(StatusType.NEW_GAME);
+        this.setStatus(Game.NEW_GAME);
     }
 
     public void setPlayingOrder(Player player1, Player player2) {
@@ -155,7 +166,7 @@ public class Game {
         noLosses++;
         this.loser.setLosses(noLosses);
 
-        this.setStatus(StatusType.WINNER);
+        this.setStatus(Game.WINNER);
         
     }
 
@@ -167,7 +178,7 @@ public class Game {
         player2Ties++;
         this.playerB.setTies(player2Ties);
 
-        this.setStatus(StatusType.TIE);
+        this.setStatus(Game.TIE);
        
     }
 
