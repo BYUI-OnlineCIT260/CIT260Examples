@@ -6,6 +6,7 @@ package byui.cit260.tictactoe.controls;
 
 
 
+import byui.cit260.tictactoe.enums.ErrorType;
 import byui.cit260.tictactoe.views.HelpMenuView;
 import byui.cit260.tictactoe.views.MainMenuView;
 import byui.cit260.tictactoe.views.GamePreferencesMenuView;
@@ -110,7 +111,7 @@ public class TicTacToe {
             name = name.trim();
 
             if (name.length() < 1) {
-                new TicTacToeError().display("\tA name must be at least one character long. Try again.");
+                new TicTacToeError(ErrorType.ERROR105).display();
                 continue;
             }
 

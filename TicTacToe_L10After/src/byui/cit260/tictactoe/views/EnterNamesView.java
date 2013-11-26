@@ -4,6 +4,9 @@
  */
 package byui.cit260.tictactoe.views;
 
+import byui.cit260.tictactoe.enums.ErrorType;
+import byui.cit260.tictactoe.enums.GameType;
+import byui.cit260.tictactoe.enums.StatusType;
 import byui.cit260.tictactoe.models.Game;
 import byui.cit260.tictactoe.interfaces.EnterInfo;
 import java.util.Scanner;
@@ -30,12 +33,12 @@ public class EnterNamesView implements EnterInfo {
         String playersName;
 
         // if one player game
-        if (Game.ONE_PLAYER.equals(this.game.getGameType())) {
+        if (GameType.ONE_PLAYER.equals(this.game.getGameType())) {
             System.out.println("\n\tFirst player:");
             playersName = (String) this.getName();
 
             if (playersName ==  null) {
-                return Game.QUIT;
+                return StatusType.QUIT;
             }
             this.game.getPlayerA().setName(playersName);
             this.game.getPlayerB().setName("Computer");
@@ -46,7 +49,7 @@ public class EnterNamesView implements EnterInfo {
             System.out.println("\n\tFirst player:");
             playersName = (String) this.getName();
             if (playersName ==  null) {
-                return Game.QUIT;
+                return StatusType.QUIT;
             }
             this.game.getPlayerA().setName(playersName); 
 
@@ -54,12 +57,12 @@ public class EnterNamesView implements EnterInfo {
             System.out.println("\n\tSecond player:");
             playersName = (String) this.getName();
             if (playersName ==  null) {
-                return Game.QUIT;
+                return StatusType.QUIT;
             }
             this.game.getPlayerB().setName(playersName);
         }
         
-        return Game.CONTINUE;
+        return StatusType.CONTINUE;
     }
  
 
@@ -74,7 +77,7 @@ public class EnterNamesView implements EnterInfo {
             strName = inFile.nextLine();
             strName = strName.trim().toUpperCase();
             if (strName.length() < 1) {
-                new TicTacToeError().display("You must enter a name or enter a \"Q\" to quit. Try again.");
+                new TicTacToeError(ErrorType.ERROR107).display();
                 return null;
             }
             strName = strName.trim();

@@ -4,13 +4,14 @@
  */
 package byui.cit260.tictactoe.views;
 
+import byui.cit260.tictactoe.enums.GameType;
+import byui.cit260.tictactoe.enums.StatusType;
 import byui.cit260.tictactoe.models.Player;
 import byui.cit260.tictactoe.models.Game;
 import byui.cit260.tictactoe.interfaces.EnterInfo;
 import java.awt.Point;
 import byui.cit260.tictactoe.controls.GameMenuControl;
 import byui.cit260.tictactoe.controls.TicTacToe;
-import byui.cit260.tictactoe.controls.TicTacToeError;
 
 /**
  *
@@ -21,7 +22,7 @@ public class GameMenuView extends Menu  implements EnterInfo {
     private Game game;
     private GameMenuControl gameCommands; 
     private GetLocationView getLocation = new GetLocationView();
-    private BoardView displayBoard = new BoardView();
+    private BoardView displayBoard;
 
     private final static String[][] menuItems = {
         {"T", "Take your turn"},
@@ -35,7 +36,9 @@ public class GameMenuView extends Menu  implements EnterInfo {
 
     public GameMenuView(Game game) {
         super(GameMenuView.menuItems);
+        this.game = game;
         this.gameCommands = new GameMenuControl(game);
+         this.displayBoard = new BoardView(this.game.getBoard());
     }
 
     public BoardView getDisplayBoard() {
@@ -53,7 +56,7 @@ public class GameMenuView extends Menu  implements EnterInfo {
     public Object getInput(Object object) {
         this.game = (Game) object;
 
-        String gameStatus = Game.CONTINUE;
+        StatusType gameStatus = StatusType.CONTINUE;
         do {
      
             this.display();
@@ -65,11 +68,11 @@ public class GameMenuView extends Menu  implements EnterInfo {
                     this.takeTurn();
                     break;
                 case "D":
-                    this.displayBoard.display(game.getBoard());
+                    this.displayBoard.display();
                     break;
                 case "N":
                     gameCommands.startNewGame(game);
-                    this.displayBoard.display(game.getBoard());
+                    this.displayBoard.display();
                     break;
                 case "R":
                     this.displayStatistics();
@@ -84,12 +87,12 @@ public class GameMenuView extends Menu  implements EnterInfo {
                     helpMenu.getInput(null);
                     break;
                 case "Q":
-                    gameStatus = Game.QUIT;
+                    gameStatus = StatusType.QUIT;
                     break;
             }
-        } while (!gameStatus.equals(Game.QUIT));
+        } while (!gameStatus.equals(StatusType.QUIT));
 
-        return Game.PLAYING;
+        return StatusType.PLAYING;
     }
     
     
@@ -97,11 +100,9 @@ public class GameMenuView extends Menu  implements EnterInfo {
         String playersMarker;
         Point selectedLocation;
 
-        if (!this.game.getStatus().equals(Game.NEW_GAME) && 
-            !this.game.getStatus().equals(Game.PLAYING)) {
-            new TicTacToeError().display(
-                    "There is no active game. You must start a new game before "
-                    + "you can take a turn");
+        if (!this.game.getStatus().equals(StatusType.NEW_GAME) && 
+            !this.game.getStatus().equals(StatusType.PLAYING)) {
+            this.displayBoard = new BoardView(this.game.getBoard());
             return;
         }
         Player currentPlayer = this.game.getCurrentPlayer();
@@ -121,7 +122,7 @@ public class GameMenuView extends Menu  implements EnterInfo {
             return;
         }
 
-        if (this.game.getGameType() == Game.ONE_PLAYER) {
+        if (this.game.getGameType().equals(GameType.ONE_PLAYER)) {
             // computers turn
             locationMarkerPlaced = this.gameCommands.playerTakesTurn(otherPlayer, null);
 
@@ -132,7 +133,7 @@ public class GameMenuView extends Menu  implements EnterInfo {
 
 
         // display board and prompt for next player's turn
-        this.displayBoard.display(game.getBoard());
+        this.displayBoard.display();
         String promptNextPlayer = getNextPlayerMessage(otherPlayer);
         System.out.println("\n\n\t" + promptNextPlayer);
 
@@ -141,16 +142,16 @@ public class GameMenuView extends Menu  implements EnterInfo {
 
     private boolean gameOver() {
         boolean done = false;
-        if (this.game.getStatus().equals(Game.TIE)) { // a tie?
+        if (this.game.getStatus().equals(StatusType.TIE)) { // a tie?
             System.out.println("\n\n\t" + this.game.getTiedMessage());
             done = true;
-        } else if (this.game.getStatus().equals(Game.WINNER)) { // a win?
+        } else if (this.game.getStatus().equals(StatusType.WINNER)) { // a win?
             System.out.println("\n\n\t" + this.game.getWinningMessage());
             done = true;
         }
         
         if (done) {
-            this.displayBoard.display(this.game.getBoard());
+            this.displayBoard.display();
         }
         
 
@@ -159,7 +160,7 @@ public class GameMenuView extends Menu  implements EnterInfo {
     
         
     private String getNextPlayerMessage(Player player) {
-        if (this.game.getGameType().equals(Game.ONE_PLAYER)) {
+        if (this.game.getGameType().equals(GameType.ONE_PLAYER)) {
             return "The computer took it's turn. It is now your turn. "
                     + player.getName();
         } else {

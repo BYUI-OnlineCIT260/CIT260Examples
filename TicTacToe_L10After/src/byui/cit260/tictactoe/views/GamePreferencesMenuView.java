@@ -5,6 +5,8 @@
 package byui.cit260.tictactoe.views;
 
 
+import byui.cit260.tictactoe.enums.ErrorType;
+import byui.cit260.tictactoe.enums.StatusType;
 import byui.cit260.tictactoe.models.Player;
 import byui.cit260.tictactoe.models.Game;
 import byui.cit260.tictactoe.interfaces.EnterInfo;
@@ -41,11 +43,11 @@ public class GamePreferencesMenuView extends Menu  implements EnterInfo {
     }
     
     @Override
-    public String getInput(Object object) {       
+    public StatusType getInput(Object object) {       
         this.game = (Game) object;
         this.gamePreferenceCommands.setGame(game);
         
-        String gameStatus = Game.PLAYING;
+        StatusType gameStatus = StatusType.PLAYING;
         do {
             this.display();
 
@@ -63,9 +65,9 @@ public class GamePreferencesMenuView extends Menu  implements EnterInfo {
                     this.getDimensions();
                     break;
                 case "Q":
-                    return Game.QUIT;
+                    return StatusType.QUIT;
             }
-        } while (!gameStatus.equals(Game.QUIT));
+        } while (!gameStatus.equals(StatusType.QUIT));
 
         return gameStatus;
     }
@@ -95,11 +97,8 @@ public class GamePreferencesMenuView extends Menu  implements EnterInfo {
     
      public boolean getDimensions() {
 
-        if (game.getStatus().equals(Game.PLAYING)) {
-            new TicTacToeError().display("You can not change the dimensions "
-              + "of the board once the game has been started. "
-              + "\n\tStart a new game and then change the dimensions "
-              + "of the board. ");
+        if (game.getStatus().equals(StatusType.PLAYING)) {
+            new TicTacToeError(ErrorType.ERROR101).display();
             return false;
         }
 
@@ -118,9 +117,7 @@ public class GamePreferencesMenuView extends Menu  implements EnterInfo {
             valuesEntered = strNoRowsColumns.split("\\s"); // tokenize the string
 
             if (valuesEntered.length < 1) {
-                new TicTacToeError().display(
-                        "You must enter two numbers, the number rows and columns, "
-                        + "or a \"Q\" to quit. Try again.");
+                new TicTacToeError(ErrorType.ERROR102).display();
                 continue;
             } else if (valuesEntered.length == 1) {
                 if (valuesEntered[0].toUpperCase().equals("Q")) { // Quit?
@@ -128,9 +125,7 @@ public class GamePreferencesMenuView extends Menu  implements EnterInfo {
                 }  // wrong number of values entered.
      
                 // wrong number of values entered.
-                new TicTacToeError().display(
-                       "You must enter two numbers, the number rows and columns, "
-                       + "or a \"Q\" to quit. Try again.");
+                new TicTacToeError(ErrorType.ERROR102).display();
                 continue;
             }
             
@@ -139,9 +134,7 @@ public class GamePreferencesMenuView extends Menu  implements EnterInfo {
             if (digitPattern.matcher(valuesEntered[0]).matches()  || 
                 digitPattern.matcher(valuesEntered[1]).matches()
                ) {
-                new TicTacToeError().display(
-                        "You must enter two numbers, the number rows and columns, "
-                        + "or a \"Q\" to quit. Try again.");
+                new TicTacToeError(ErrorType.ERROR102).display();
                 continue;
             }
             

@@ -4,6 +4,7 @@
  */
 package byui.cit260.tictactoe.views;
 
+import byui.cit260.tictactoe.enums.ErrorType;
 import byui.cit260.tictactoe.models.Board;
 import byui.cit260.tictactoe.models.Game;
 import byui.cit260.tictactoe.interfaces.EnterInfo;
@@ -44,9 +45,7 @@ public class GetLocationView implements EnterInfo {
             coordinates = strRowColumn.split("\\s"); // tokenize the string
 
             if (coordinates.length < 1) { // no coordinates specified
-                new TicTacToeError().display(
-                        "You must enter two numbers, a row and the column, "
-                        + "or a \"Q\" to quit. Try again.");
+                new TicTacToeError(ErrorType.ERROR102).display();
                 continue;
             }    
 
@@ -54,9 +53,7 @@ public class GetLocationView implements EnterInfo {
                 if (coordinates[0].toUpperCase().equals("Q")) { // Quit?
                     return null;
                 } else { // wrong number of values entered.
-                    new TicTacToeError().display(
-                        "You must enter two numbers, a row and the column, "
-                        + "or a \"Q\" to quit. Try again.");
+                    new TicTacToeError(ErrorType.ERROR102).display();
                     continue;
                 }
             }
@@ -66,9 +63,7 @@ public class GetLocationView implements EnterInfo {
             if (digitPattern.matcher(coordinates[0]).matches()  || 
                 digitPattern.matcher(coordinates[1]).matches()
                ) {
-                new TicTacToeError().display(
-                        "You must enter two numbers, a row and the column, "
-                        + "or a \"Q\" to quit. Try again.");
+                new TicTacToeError(ErrorType.ERROR102).display();
                 continue;
             }
             
@@ -78,8 +73,7 @@ public class GetLocationView implements EnterInfo {
             Board board = game.getBoard();
             if (row < 1   ||  row > board.getRowCount() ||
                 column < 1  ||  column > board.getColumnCount()) {
-                new TicTacToeError().display(
-                        "Enter a valid number of rows and columns from 3 to 10. Try again.");
+                new TicTacToeError(ErrorType.ERROR207).display();
                 continue;
             }
 

@@ -2,16 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package byui.cit260.tictactoe.interfaces;
+package byui.cit260.tictactoe.enums;
 
 /**
  *
  * @author jacksonrkj
  */
-public interface DisplayInfo {
-    /**
-     *
-     */
-    void display();
-    
+public enum GameType { ONE_PLAYER,
+                       TWO_PLAYER;
 }

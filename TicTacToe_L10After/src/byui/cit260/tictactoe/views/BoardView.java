@@ -15,10 +15,13 @@ import byui.cit260.tictactoe.interfaces.DisplayInfo;
 public class BoardView implements DisplayInfo {
     
     Board board;
+
+    public BoardView(Board board) {
+        this.board = board;
+    }
     
     @Override
-    public Object display(Object object) {
-        this.board = (Board) object;
+    public void display() {
         this.printHeadRow();
         this.printDividerRow();
         for (int i = 0; i < this.board.getRowCount(); i++) {
@@ -27,8 +30,7 @@ public class BoardView implements DisplayInfo {
             this.printDividerRow();
         }
         System.out.println();
-         
-        return null;
+
     }
 
     private void printHeadRow() {

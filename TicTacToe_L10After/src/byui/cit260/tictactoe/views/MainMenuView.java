@@ -4,12 +4,15 @@
  */
 package byui.cit260.tictactoe.views;
 
+import byui.cit260.tictactoe.enums.GameType;
+import byui.cit260.tictactoe.enums.StatusType;
 import byui.cit260.tictactoe.models.Game;
 import byui.cit260.tictactoe.interfaces.EnterInfo;
 import java.util.Scanner;
 import byui.cit260.tictactoe.controls.MainMenuControl;
 import byui.cit260.tictactoe.controls.TicTacToe;
 import byui.cit260.tictactoe.controls.TicTacToeError;
+import byui.cit260.tictactoe.enums.ErrorType;
 
 /**
  *
@@ -35,9 +38,9 @@ public class MainMenuView extends Menu  implements EnterInfo {
     }
     
     @Override
-    public String getInput(Object object) {       
+    public StatusType getInput(Object object) {       
         
-        String gameStatus = "PLAYING";
+        StatusType gameStatus = StatusType.PLAYING;
         do {
             this.display();
 
@@ -55,31 +58,31 @@ public class MainMenuView extends Menu  implements EnterInfo {
                     helpMenu.getInput(null);
                     break;
                 case "X":
-                    return Game.EXIT;
+                    return StatusType.EXIT;
             }
-        } while (!gameStatus.equals("EXIT"));
+        } while (!gameStatus.equals(StatusType.EXIT));
 
-        return Game.EXIT;
+        return StatusType.EXIT;
     }
 
     private void startGame(long noPlayers) {
                 
         if (noPlayers != 1  &&  noPlayers != 2) {
-            new TicTacToeError().display("startGame - invalid number of players specified.");
+            new TicTacToeError(ErrorType.ERROR211).display();
             return;
         }
         
         Game game;
         if (noPlayers == 1) {
-            game = this.mainCommands.create(Game.ONE_PLAYER);
+            game = this.mainCommands.create(GameType.ONE_PLAYER);
         }
         else {
-            game = this.mainCommands.create(Game.TWO_PLAYER);
+            game = this.mainCommands.create(GameType.TWO_PLAYER);
         }
         
-        SelectPlayersView sekectPlayersView = new SelectPlayersView(game);
-        String status = (String) sekectPlayersView.selectPlayers(TicTacToe.getNameList());
-        if (status.equals(Game.QUIT)) {
+        SelectPlayersView selectPlayersView = new SelectPlayersView(game);
+        StatusType status = selectPlayersView.selectPlayers(TicTacToe.getNameList());
+        if (status.equals(StatusType.QUIT)) {
             return;
         }
 
@@ -87,15 +90,15 @@ public class MainMenuView extends Menu  implements EnterInfo {
         gameMenu.getInput(game);
     }
 
-    private String quitGame() {
+    private StatusType quitGame() {
         System.out.println("\n\tAre you sure you want to quit? (Y or N)");
         Scanner inFile = new Scanner(System.in);
         String answer = inFile.next().trim().toUpperCase();
         if (answer.equals("Y")) {
-            return "EXIT";
+            return StatusType.EXIT;
         }
 
-        return "PLAYING";
+        return StatusType.PLAYING;
     }
 
 

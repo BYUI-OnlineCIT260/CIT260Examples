@@ -5,6 +5,10 @@
 package byui.cit260.tictactoe.controls;
 
 
+import byui.cit260.tictactoe.enums.ErrorType;
+import byui.cit260.tictactoe.enums.GameType;
+import byui.cit260.tictactoe.enums.PlayerType;
+import byui.cit260.tictactoe.enums.StatusType;
 import byui.cit260.tictactoe.models.Player;
 import byui.cit260.tictactoe.models.Board;
 import byui.cit260.tictactoe.models.Game;
@@ -33,33 +37,32 @@ public class GameMenuControl {
         Point locationMarkerPlaced = null;
 
          if (player ==  null) {
-            new TicTacToeError().display("You must start a new game first.");
+            new TicTacToeError(ErrorType.ERROR206).display();
             return null;
         }
 
-        if (!player.getPlayerType().equals(Player.REGULAR_PLAYER) && 
-            !player.getPlayerType().equals(Player.COMPUTER_PLAYER)) {
-            new TicTacToeError().display("GameCommands - takeTurn: invalidPlayerTYpe");
+        if (!player.getPlayerType().equals(PlayerType.REGULAR_PLAYER) && 
+            !player.getPlayerType().equals(PlayerType.COMPUTER_PLAYER)) {
+            new TicTacToeError(ErrorType.ERROR206).display();
             return null;
         }
 
-        if (this.game.getStatus().equals(Game.NEW_GAME)) {
-            this.game.setStatus(Game.PLAYING);
+        if (this.game.getStatus().equals(StatusType.NEW_GAME)) {
+            this.game.setStatus(StatusType.PLAYING);
         }        
-        else if (!this.game.getStatus().equals(Game.PLAYING )) {
-            new TicTacToeError().display("There is no active game. "
-                    + "You must start a new game before you can take a turn");
+        else if (!this.game.getStatus().equals(StatusType.PLAYING )) {
+            new TicTacToeError(ErrorType.ERROR206).display();
         }
         
        
         
-        String playerType = player.getPlayerType();
+        PlayerType playerType = player.getPlayerType();
 
-        if (playerType.equals(Player.REGULAR_PLAYER)) {
+        if (playerType.equals(PlayerType.REGULAR_PLAYER)) {
             this.regularTurn(player, selectedLocation);
             locationMarkerPlaced = selectedLocation;
         }
-        else if (playerType.equals(Player.COMPUTER_PLAYER)) {
+        else if (playerType.equals(PlayerType.COMPUTER_PLAYER)) {
             locationMarkerPlaced = this.coumputerTakesTurn(player);
         }
 
@@ -72,12 +75,12 @@ public class GameMenuControl {
         Player currentPlayer = this.game.getCurrentPlayer();
         Player otherPlayer = this.game.getOtherPlayer();
         
-        String playerType = currentPlayer.getPlayerType(); 
+        PlayerType playerType = currentPlayer.getPlayerType(); 
 
-        if (this.game.getGameType().equals(Game.ONE_PLAYER)) {
-            if (currentPlayer.getPlayerType().equals(Player.REGULAR_PLAYER)) {
+        if (this.game.getGameType().equals(GameType.ONE_PLAYER)) {
+            if (currentPlayer.getPlayerType().equals(PlayerType.REGULAR_PLAYER)) {
                 this.playerTakesTurn(currentPlayer, selectedLocation);
-                if (this.game.getStatus().equals(Game.PLAYING)) { // game over ?
+                if (this.game.getStatus().equals(StatusType.PLAYING)) { // game over ?
                     return;
                 }
                 
@@ -85,12 +88,12 @@ public class GameMenuControl {
                 String message = "The computer also took it's turn. "
                         + " it is your turn again " + currentPlayer.getName();
             }
-            if (currentPlayer.getPlayerType().equals(Player.COMPUTER_PLAYER)) {
+            if (currentPlayer.getPlayerType().equals(PlayerType.COMPUTER_PLAYER)) {
                 this.playerTakesTurn(currentPlayer, selectedLocation);
                 this.alternatePlayers();                
             } 
         } 
-        else if (this.game.getGameType().equals(Game.TWO_PLAYER)) {
+        else if (this.game.getGameType().equals(GameType.TWO_PLAYER)) {
             this.playerTakesTurn(currentPlayer, selectedLocation);
             this.alternatePlayers();
         }
@@ -112,18 +115,17 @@ public class GameMenuControl {
     
     public boolean regularTurn(Player player, Point location){
         if (location == null) {
-            new TicTacToeError().display("GameCommands - regularTurn: location is null");
+            new TicTacToeError(ErrorType.ERROR108).display();
             return false;
         }
         
-        if (game.getStatus().equals(Game.PLAYING) && 
-            game.getStatus().equals(Game.NEW_GAME)) {
-            new TicTacToeError().display("There is no active game. "
-                    + "You must start a new game before you can take a turn");
+        if (game.getStatus().equals(StatusType.PLAYING) && 
+            game.getStatus().equals(StatusType.NEW_GAME)) {
+            new TicTacToeError(ErrorType.ERROR206).display();
             return false;
         }
 
-        game.setStatus(Game.PLAYING);
+        game.setStatus(StatusType.PLAYING);
         this.markLocation(player, location);
         
         return true;
@@ -131,7 +133,7 @@ public class GameMenuControl {
     
     public Point coumputerTakesTurn(Player player) {
         // computer takes turn
-        game.setStatus(Game.PLAYING); 
+        game.setStatus(StatusType.PLAYING); 
         Point location = this.getComputersSelection();
         this.markLocation(player, location);
         return location;
@@ -145,18 +147,18 @@ public class GameMenuControl {
         this.game.getBoard().occupyLocation(player, location.x, location.y);
         if (this.isTie()) { // game tied already
             this.game.recordTie();
-            this.game.setStatus(Game.TIE);
+            this.game.setStatus(StatusType.TIE);
             return;
         }
 
         boolean aWinner = this.isWinner();
         if (aWinner) { // game won already
             this.game.recordWinner();
-            this.game.setStatus(Game.WINNER);
+            this.game.setStatus(StatusType.WINNER);
             return;
         }
         
-        this.game.setStatus(Game.PLAYING);
+        this.game.setStatus(StatusType.PLAYING);
     }
     
     
@@ -175,7 +177,7 @@ public class GameMenuControl {
             coordinate = this.chooseRandomLocation();
 
             if (coordinate == null) {
-                new TicTacToeError().display("No empty locations found on the board");
+                new TicTacToeError(ErrorType.ERROR201).display();
                 return null;
             }
         }
