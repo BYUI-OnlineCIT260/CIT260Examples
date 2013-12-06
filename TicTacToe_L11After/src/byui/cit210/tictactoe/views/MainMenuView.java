@@ -41,23 +41,29 @@ public class MainMenuView extends Menu implements EnterInfo {
         
         String gameStatus = "PLAYING";
         do {
-            this.display();
+            try {
+ 
+                this.display();
 
-            // get commaned entered
-            String command = this.getCommand();
-            switch (command) {
-                case "1":
-                    this.startGame(1);
-                    break;
-                case "2":
-                    this.startGame(2);
-                    break;
-                case "H":
-                    HelpMenuView helpMenu = TicTacToe.getHelpMenu();
-                    helpMenu.getInput(null);
-                    break;
-                case "X":
-                    return StatusType.EXIT;
+                // get commaned entered
+                String command = this.getCommand();
+                switch (command) {
+                    case "1":
+                        this.startGame(1);
+                        break;
+                    case "2":
+                        this.startGame(2);
+                        break;
+                    case "H":
+                        HelpMenuView helpMenu = TicTacToe.getHelpMenu();
+                        helpMenu.getInput(null);
+                        break;
+                    case "X":
+                        return StatusType.EXIT;
+                }
+                                }
+            catch (TicTacToeException e) {
+                System.out.println("\n" + e.getMessage());
             }
         } while (!gameStatus.equals("EXIT"));
 
