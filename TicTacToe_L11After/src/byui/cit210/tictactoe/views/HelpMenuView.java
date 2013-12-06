@@ -6,6 +6,8 @@ package byui.cit210.tictactoe.views;
 
 
 import byui.cit210.tictactoe.enums.StatusType;
+import byui.cit210.tictactoe.exceptions.MenuException;
+import byui.cit210.tictactoe.exceptions.TicTacToeException;
 import byui.cit210.tictactoe.intefaces.EnterInfo;
 
 /**
@@ -30,37 +32,46 @@ public class HelpMenuView extends Menu implements EnterInfo  {
     
     @Override
     public StatusType getInput(Object object) {       
-        
-        StatusType gameStatus = StatusType.PLAYING;
-        do {
-            this.display();
             
-            // get commaned entered
-            String command = this.getCommand();
-            switch (command) {
-                case "B":
-                    this.displayHelp(Help.BOARD);
-                    break;
-                case "C":
-                    this.displayHelp(Help.COMPUTER_PLAYER);
-                    break;
-                case "G":
-                    this.displayHelp(Help.GAME);
-                    break;                  
-                case "L":
-                    this.displayHelp(Help.LOCATION);
-                    break;
-                case "M":
-                    this.displayHelp(Help.MARKER);
-                    break;
-                 case "R":
-                    this.displayHelp(Help.REAL_PLAYER);
-                    break; 
-                case "Q": 
-                    return StatusType.QUIT;
-            }
-        } while (gameStatus != StatusType.QUIT);  
-        
+            StatusType gameStatus = StatusType.PLAYING;
+            do {
+                try {
+                    
+                    this.display();
+
+                    // get commaned entered
+                    String command = this.getCommand();
+                    switch (command) {
+                        case "B":
+                            this.displayHelp(Help.BOARD);
+                            break;
+                        case "C":
+                            this.displayHelp(Help.COMPUTER_PLAYER);
+                            break;
+                        case "G":
+                            this.displayHelp(Help.GAME);
+                            break;                  
+                        case "L":
+                            this.displayHelp(Help.LOCATION);
+                            break;
+                        case "M":
+                            this.displayHelp(Help.MARKER);
+                            break;
+                         case "R":
+                            this.displayHelp(Help.REAL_PLAYER);
+                            break; 
+                        case "Q": 
+                            return StatusType.QUIT;
+                    }
+                    
+                }
+                catch (TicTacToeException e) {
+                    System.out.println("\n" + e.getMessage());
+                }
+                
+            } while (gameStatus != StatusType.QUIT);  
+
+         
          return gameStatus;
     }
     
