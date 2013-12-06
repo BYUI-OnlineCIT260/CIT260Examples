@@ -87,8 +87,9 @@ public class TicTacToe {
         } catch (TicTacToeException ex) {
             System.out.println(ex.getMessage());
         }
-        
-        TicTacToe.inFile.close();
+        finally {
+            TicTacToe.inFile.close();
+        }
     }
     
     private void display() {
