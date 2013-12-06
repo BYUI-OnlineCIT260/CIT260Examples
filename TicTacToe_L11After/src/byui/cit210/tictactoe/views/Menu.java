@@ -6,8 +6,9 @@ package byui.cit210.tictactoe.views;
 
 import byui.cit210.tictactoe.controls.TicTacToe;
 import byui.cit210.tictactoe.enums.ErrorType;
+import byui.cit210.tictactoe.exceptions.MenuException;
+import byui.cit210.tictactoe.exceptions.TicTacToeException;
 import java.util.Scanner;
-import byui.cit210.tictactoe.intefaces.EnterInfo;
 
 /**
  *
@@ -55,7 +56,7 @@ public abstract class Menu {
         return false;
     }
 
-    protected final String getCommand() {
+    protected final String getCommand() throws TicTacToeException {
 
         Scanner inFile = TicTacToe.getInputFile();
         String command;
@@ -65,7 +66,7 @@ public abstract class Menu {
             command = command.trim().toUpperCase();
             valid = validCommand(command);
             if (!validCommand(command)) {
-                System.out.println("\n\t" + ErrorType.ERROR105.getMessage());  
+                throw new TicTacToeException(ErrorType.ERROR105.getMessage());  
             }
             return command;
                 

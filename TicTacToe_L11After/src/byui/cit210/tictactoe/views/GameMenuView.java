@@ -48,12 +48,12 @@ public class GameMenuView extends Menu  implements EnterInfo {
     @Override
     public Object getInput(Object object) throws TicTacToeException {
         this.game = (Game) object;
-
+            
         StatusType gameStatus = StatusType.CONTINUE;
         do {
-     
+
             this.display();
-            
+
             // get commaned entered
             String command = this.getCommand();
             try {
@@ -83,12 +83,16 @@ public class GameMenuView extends Menu  implements EnterInfo {
                         gameStatus = StatusType.QUIT;
                         break;
                 }
+                
             } catch (GameException | TicTacToeException tex) {
                 System.out.println("\n\t" + tex.getMessage());
                 continue;
             }
+            
         } while (gameStatus != StatusType.QUIT);
 
+
+        
         return StatusType.PLAYING;
     }
     
