@@ -42,29 +42,34 @@ public class GamePreferencesMenuView extends Menu  implements EnterInfo {
     }
     
     @Override
-    public StatusType getInput(Object object) throws TicTacToeException {       
+    public StatusType getInput(Object object){       
         this.game = (Game) object;
         this.gamePreferenceCommands.setGame(game);
         
         StatusType gameStatus = StatusType.PLAYING;
         do {
-            this.display();
+            try {
+                this.display();
 
-            // get commaned entered
-            String command = this.getCommand();
-            
-            switch (command) {
-                case "1":
-                    getMarker(this.game.getPlayerA());
-                    break;
-                case "2":
-                    getMarker(this.game.getPlayerB());
-                    break;
-                case "D":
-                    this.getDimensions();
-                    break;
-                case "Q":
-                    return StatusType.QUIT;
+                // get commaned entered
+                String command = this.getCommand();
+
+                switch (command) {
+                    case "1":
+                        getMarker(this.game.getPlayerA());
+                        break;
+                    case "2":
+                        getMarker(this.game.getPlayerB());
+                        break;
+                    case "D":
+                        this.getDimensions();
+                        break;
+                    case "Q":
+                        return StatusType.QUIT;
+                }
+            } catch (TicTacToeException tex) {
+                System.out.println("\n\t" + tex.getMessage());
+                continue;
             }
         } while (gameStatus != StatusType.QUIT);
 

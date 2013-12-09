@@ -11,5 +11,5 @@ import byui.cit210.tictactoe.exceptions.TicTacToeException;
  * @author jacksonrkj
  */
 public interface EnterInfo {
-    Object getInput(Object object )  throws TicTacToeException; 
+    Object getInput(Object object ); 
 }

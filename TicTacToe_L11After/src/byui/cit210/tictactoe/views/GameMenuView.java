@@ -46,17 +46,17 @@ public class GameMenuView extends Menu  implements EnterInfo {
 
 
     @Override
-    public Object getInput(Object object) throws TicTacToeException {
+    public Object getInput(Object object)  {
         this.game = (Game) object;
             
         StatusType gameStatus = StatusType.CONTINUE;
         do {
-
-            this.display();
-
-            // get commaned entered
-            String command = this.getCommand();
             try {
+                this.display();
+
+                // get commaned entered
+                String command = this.getCommand();
+            
                 switch (command) {
                     case "T":
                         this.takeTurn();

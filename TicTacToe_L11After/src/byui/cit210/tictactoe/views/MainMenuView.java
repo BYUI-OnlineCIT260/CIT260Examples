@@ -37,7 +37,7 @@ public class MainMenuView extends Menu implements EnterInfo {
     }
     
     @Override
-    public StatusType getInput(Object object) throws TicTacToeException {       
+    public StatusType getInput(Object object) {       
         
         String gameStatus = "PLAYING";
         do {

@@ -22,7 +22,7 @@ public class GetLocationView implements EnterInfo {
     private Game game;
     
     @Override
-    public Object getInput(Object object) throws TicTacToeException {
+    public Object getInput(Object object) {
         this.game = (Game) object;
         Scanner inFile = TicTacToe.getInputFile(); // get input file 
 
@@ -70,8 +70,10 @@ public class GetLocationView implements EnterInfo {
             return null;
         } catch (Exception e) {
             e.printStackTrace();
-            throw new TicTacToeException(e.getCause().toString() + ": " + e.getMessage());
         }
+        
+        return location;
     }
+    
 
 }
